@@ -1,0 +1,19 @@
+{
+  "name": "appAGBA",
+  "version": "0.0.0",
+  "description": "app para la Asociacion de patin de Buenos Aires",
+  "main": "index.html",
+  "authors": [
+    "Juan Pablo Doña",
+    "Fermin Algañaras"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
