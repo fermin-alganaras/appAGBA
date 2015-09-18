@@ -1,0 +1,8 @@
+
+<table class="table table-responsive">
+  <tr ng-repeat="patinador in patinadores | filter:filtroPadron">
+    <td>{{patinador.dni}}</td>
+    <td>{{patinador.nombre}}</td>
+    <td>{{patinador.apellido}}</td>
+  </tr>
+</table>
