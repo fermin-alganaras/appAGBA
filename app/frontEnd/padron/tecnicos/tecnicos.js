@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-  .module('patron.tecnicos', [
+  .module('padron.tecnicos', [
     'tecnicos'
   ])
 
