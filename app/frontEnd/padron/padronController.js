@@ -1,12 +1,15 @@
-(function(){
+(function() {
   'use strict';
 
   angular
-  .module('padron')
-  .controller('padronController', padronController);
+    .module('padron')
+    .controller('padronController', padronController);
 
-  function padronController(){
-    
+    padronController.$inject = ['Padron']
+
+  function padronController(Padron) {
+    var padronController = this;
+    padronController.padron = Padron.padron;
 
   }
 })();

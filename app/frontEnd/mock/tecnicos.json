@@ -1,0 +1,37 @@
+{
+ "tecnicos": [
+    {
+     "dni": 1,
+     "nombre":"Gandalf",
+     "apellido":"Gris",
+     "FechaNacimiento":"15/10/1991",
+     "sexo":"M",
+     "nacionalidad":"Tierra media",
+     "domicilio":"calle falsa 123",
+     "club":"CA.Brillanté",
+     "licencia": false
+    },
+    {
+     "dni": 2,
+     "nombre":"Miyagi",
+     "apellido":"Wata",
+     "FechaNacimiento":"15/10/1982",
+     "sexo":"M",
+     "nacionalidad":"Japon",
+     "domicilio":"calle verdadera 123",
+     "club":"CA.Brillanté",
+     "licencia": false
+    },
+    {
+     "dni": 3,
+     "nombre":"Rafiki",
+     "apellido":"FumaPorro",
+     "FechaNacimiento":"15/11/1985",
+     "sexo":"M",
+     "nacionalidad":"Sabana",
+     "domicilio":"M. de rosas 2323",
+     "club":"C.A.B.J",
+     "licencia": false
+    }
+  ]
+}

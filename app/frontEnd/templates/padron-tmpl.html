@@ -1,6 +1,24 @@
+<input class="form-control" name="name" ng-model="filtroPadron" placeholder="Escriba por lo que se decea filtrar" type="text"><br>
+<div class="checkbox">
+  <label>
+    <input class='' type='checkbox' ng-model="multiselect" ng-init='multiselect = false'>
+    <b>Habilitar multiseleccion</b>
+  </label>
+</div>
+<div class="checkbox">
+  <label>
+    <input class='' type='checkbox'>
+    <b>seleccionar todos</b>
+  </label>
+</div>
 
-<table class="table table-responsive">
-  <tr ng-repeat="patinador in patinadores | filter:filtroPadron">
+<table class="table table-responsive table-hover">
+  <tr>
+    <td>DNI</td>
+    <td>Nombre</td>
+    <td>Apellido</td>
+  </tr>
+  <tr ng-repeat="patinador in padronController.padron.patinadores | filter:filtroPadron" selectable-row multiselect="{{multiselect}}">
     <td>{{patinador.dni}}</td>
     <td>{{patinador.nombre}}</td>
     <td>{{patinador.apellido}}</td>
