@@ -18,9 +18,10 @@
     <td>Nombre</td>
     <td>Apellido</td>
   </tr>
-  <tr ng-repeat="patinador in padronController.padron.patinadores | filter:filtroPadron" selectable-row multiselect="{{multiselect}}">
-    <td>{{patinador.dni}}</td>
-    <td>{{patinador.nombre}}</td>
-    <td>{{patinador.apellido}}</td>
+  <tr ng-repeat="persona in padronController.mergedPadron | filter:filtroPadron" selectable-row multiselect="{{multiselect}}">
+    <td>{{persona.dni}}</td>
+    <td>{{persona.nombre}}</td>
+    <td>{{persona.apellido}}</td>
+
   </tr>
 </table>

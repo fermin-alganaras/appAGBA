@@ -10,6 +10,7 @@
   function padronController(Padron) {
     var padronController = this;
     padronController.padron = Padron.padron;
-
+    padronController.mergedPadron = Padron.mergePadronData();
   }
+
 })();
