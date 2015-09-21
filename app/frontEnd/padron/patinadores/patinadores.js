@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-  .module('patron.patinadores', [
+  .module('padron.patinadores', [
     'patinadores'
   ])
 

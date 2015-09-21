@@ -1,0 +1,59 @@
+{
+ "patinadores": [
+    {
+     "dni": 1,
+     "nombre":"Juan",
+     "apellido":"Von Butajen",
+     "FechaNacimiento":"15/10/1991",
+     "sexo":"M",
+     "nacionalidad":"Argentina",
+     "domicilio":"calle falsa 123",
+     "club":"CA.Brillanté",
+     "licencia": false
+    },
+    {
+     "dni": 2,
+     "nombre":"Pedro",
+     "apellido":"Ajenjo",
+     "FechaNacimiento":"15/10/1982",
+     "sexo":"F",
+     "nacionalidad":"Colombia",
+     "domicilio":"calle verdadera 123",
+     "club":"CA.Brillanté",
+     "licencia": false
+    },
+    {
+     "dni": 3,
+     "nombre":"Timon",
+     "apellido":"Ernestino",
+     "FechaNacimiento":"15/11/1985",
+     "sexo":"M",
+     "nacionalidad":"Chile",
+     "domicilio":"M. de rosas 2323",
+     "club":"CA.Brillanté",
+     "licencia": false
+    },
+    {
+     "dni": 4,
+     "nombre":"Pumba",
+     "apellido":"Lija",
+     "FechaNacimiento":"15/6/1991",
+     "sexo":"F",
+     "nacionalidad":"Japon",
+     "domicilio":"P.Andes 723",
+     "club":"C.A.B.J",
+     "licencia": false
+    },
+    {
+     "dni": 5,
+     "nombre":"Mufasa",
+     "apellido":"Heinz",
+     "FechaNacimiento":"15/2/1991",
+     "sexo":"M",
+     "nacionalidad":"Brazil",
+     "domicilio":"Austin Powers 555",
+     "club":"C.A.B.J",
+     "licencia": false
+    }
+  ]
+}
