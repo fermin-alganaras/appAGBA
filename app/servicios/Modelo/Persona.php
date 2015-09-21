@@ -24,7 +24,8 @@ abstract class Persona {
     protected $fechaAlta;
     protected $licencia;
     protected $club;
-    
+    protected $domicilio;
+            
     function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta) {
         $this->apellido = $apellido;
         $this->nombre = $nombre;
@@ -123,6 +124,15 @@ abstract class Persona {
     function setClub($club) {
         $this->club = $club;
     }
+    
+    function getDomicilio() {
+        return $this->domicilio;
+    }
+
+    function setDomicilio($domicilio) {
+        $this->domicilio = $domicilio;
+    }
+
 
 
 
