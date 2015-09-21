@@ -14,12 +14,13 @@
 class Licencia {
     
     private $IdLicencia;
-    private $nombre;
+    private $numero;
     private $costo;
+    private $tipo;
     
     
-    function __construct($nombre, $costo) {
-        $this->nombre = $nombre;
+    function __construct($numero, $costo, $tipo) {
+        $this->numero = $numero;
         $this->costo = $costo;
     }
     
@@ -27,8 +28,8 @@ class Licencia {
         return $this->IdLicencia;
     }
 
-    function getNombre() {
-        return $this->nombre;
+    function getNumero() {
+        return $this->numero;
     }
 
     function getCosto() {
@@ -39,13 +40,23 @@ class Licencia {
         $this->IdLicencia = $IdLicencia;
     }
 
-    function setNombre($nombre) {
-        $this->nombre = $nombre;
+    function setNumero($numero) {
+        $this->numero = $numero;
     }
 
     function setCosto($costo) {
         $this->costo = $costo;
     }
+    
+    function getTipo() {
+        return $this->tipo;
+    }
+
+    function setTipo($tipo) {
+        $this->tipo = $tipo;
+    }
+
+
 
 
 

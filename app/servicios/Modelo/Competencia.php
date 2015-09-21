@@ -17,6 +17,7 @@ class Competencia {
     private $denominacion;
     private $edad;
     private $archivo;
+    private $torneo;
     
     function __construct($denominacion, $edad, $archivo) {
         $this->denominacion = $denominacion;
@@ -55,6 +56,15 @@ class Competencia {
     function setArchivo($archivo) {
         $this->archivo = $archivo;
     }
+    
+    function getTorneo() {
+        return $this->torneo;
+    }
+
+    function setTorneo($torneo) {
+        $this->torneo = $torneo;
+    }
+
 
 
 
