@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "angular-permission": "~0.3.1"
   }
 }

@@ -1,0 +1,59 @@
+{
+ "delegados": [
+    {
+     "dni": 1,
+     "nombre":"alejandro",
+     "apellido":"Torres",
+     "FechaNacimiento":"15/10/1991",
+     "sexo":"M",
+     "nacionalidad":"Argentina",
+     "domicilio":"calle falsa 123",
+     "club":"CA.Brillanté",
+     "licencia": true
+    },
+    {
+     "dni": 2,
+     "nombre":"Julia",
+     "apellido":"Martines",
+     "FechaNacimiento":"15/10/1982",
+     "sexo":"F",
+     "nacionalidad":"Colombia",
+     "domicilio":"calle verdadera 123",
+     "club":"CA.Brillanté",
+     "licencia": false
+    },
+    {
+     "dni": 3,
+     "nombre":"Franco",
+     "apellido":"Zuñiga",
+     "FechaNacimiento":"15/11/1985",
+     "sexo":"M",
+     "nacionalidad":"Chile",
+     "domicilio":"M. de rosas 2323",
+     "club":"El tomba puto",
+     "licencia": false
+    },
+    {
+     "dni": 4,
+     "nombre":"Erica",
+     "apellido":"Vernouli",
+     "FechaNacimiento":"15/6/1991",
+     "sexo":"F",
+     "nacionalidad":"Japon",
+     "domicilio":"P.Andes 723",
+     "club":"El tomba puto",
+     "licencia": false
+    },
+    {
+     "dni": 5,
+     "nombre":"javier",
+     "apellido":"Einstein",
+     "FechaNacimiento":"15/2/1991",
+     "sexo":"M",
+     "nacionalidad":"Brazil",
+     "domicilio":"Austin Powers 555",
+     "club":"C.A.B.J",
+     "licencia": false
+    }
+  ]
+}

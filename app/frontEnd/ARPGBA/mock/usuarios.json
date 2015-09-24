@@ -1,0 +1,10 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "usuario": "CA.Brillanté",
+      "pass": "1234",
+      "super": false
+    }
+  ]
+}

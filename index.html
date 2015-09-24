@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Gestion AGBA</title>
-  </head>
-  <body ng-app="appAGBA">
-    <link rel="stylesheet" href="bower_components/bootstrap\dist\css\bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 
-    <div class="container-fluid">
-      <div class="row"  style="margin-bottom: 1%; padding-top: 1%">
-        <ul class="nav nav-pills nav-justified">
-          <a href="#" class="navbar-brand">ARPGBA</a>
-          <li><a href="">Padron</a></li>
-          <li><a href="#">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="row">
-        <div class="col-lg-3" ui-view="accionesPadron"></div>
-        <div class="col-lg-9" ui-view="padron"></div>
-      </div>
+<head>
+  <meta charset="utf-8">
+  <title>Gestion ARPGBA</title>
+</head>
+<body ng-app="ARPGBA">
+  <link rel="stylesheet" href="bower_components/bootstrap\dist\css\bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="app/frontEnd\ARPGBA\common\style\estilo.css" media="screen" title="no title" charset="utf-8">
+
+  <div class="container-fluid">
+    <div class="row" ui-view="navBar"></div>
+    <div class="row">
+      <div class="col-lg-3 margen" ui-view="sideBar"></div>
+      <div class="col-lg-9" ui-view="content"></div>
     </div>
-    <script type="text/javascript" src="bower_components/jquery\dist\jquery.min.js"></script>
-    <script type="text/javascript" src="bower_components/bootstrap\dist\js\bootstrap.min.js"></script>
-    <script type="text/javascript" src="bower_components/angular\angular.min.js"></script>
-    <script type="text/javascript" src="bower_components/lodash\lodash.min.js"></script>
-    <script type="text/javascript" src="bower_components/ui-router\release\angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="app/frontEnd\common\modelos\appAGBA.js"></script>
-    <script type="text/javascript" src="app/frontEnd\common\CONSTANTS.JS"></script>
-    <script type="text/javascript" src="app/frontEnd\common\modelos\patinadores-modelo.js"></script>
-    <script type="text/javascript" src="app/frontEnd\common\modelos\delegados-modelo.js"></script>
-    <script type="text/javascript" src="app/frontEnd\common\modelos\tecnicos-modelo.js"></script>
-    <script type="text/javascript" src="app/frontEnd/padron\patinadores\patinadores.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\tecnicos\tecnicos.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\delegados\delegados.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\padron.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\padronController.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\delegados\delegados.service.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\patinadores\patinadores.service.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\tecnicos\tecnicos.service.js"></script>
-    <script type="text/javascript" src="app/frontEnd\padron\padron.service.js"></script>
-    <script type="text/javascript" src="app/frontEnd\common/directivas/selectableRow.js"></script>
+  </div>
+  <script type="text/javascript" src="bower_components/jquery\dist\jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap\dist\js\bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular\angular.min.js"></script>
+  <script type="text/javascript" src="bower_components/lodash\lodash.min.js"></script>
+  <script type="text/javascript" src="bower_components/ui-router\release\angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-permission\dist\angular-permission.js"></script>
+  <script type="text/javascript" src="app/frontEnd/ARPGBA\common\modelos\ARPGBA.js"></script>
+  <script type="text/javascript" src="app/frontEnd/ARPGBA\common\modelos\clubes-modelo.js"></script>
+  <script type="text/javascript" src="app/frontEnd/ARPGBA\Admin\common\modelos\admin.modelo.js"></script>
+  <script type="text/javascript" src="app/frontEnd/ARPGBA\Usr\common\modelos\usr.modelo.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\common\CONSTANTS.JS"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\common\modelos\patinadores-modelo.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\common\modelos\delegados-modelo.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\common\modelos\tecnicos-modelo.js"></script>
+  <script type="text/javascript" src="app/frontEnd/ARPGBA\padron\patinadores\patinadores.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\clubes\clubes.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\usuarios\usuario.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\usuarios\usuarios.service.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\tecnicos\tecnicos.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\delegados\delegados.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\padron.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\padronController.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\clubes\clubesController.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\delegados\delegados.service.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\patinadores\patinadores.service.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\tecnicos\tecnicos.service.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\padron.service.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\common\directivas\selectableRow.js"></script>
 
 
 
-  </body>
+</body>
+
 </html>

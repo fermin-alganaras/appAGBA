@@ -1,0 +1,16 @@
+<table class="table table-responsive table-hover">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Club</th>
+      <th>Licencia</th>
+    </tr>
+  </thead>
+  <tr ng-repeat="persona in padronController.mergedPadron">
+    <td>{{persona.nombre}}</td>
+    <td>{{persona.apellido}}</td>
+    <td>{{persona.club}}</td>
+    <td ng-class="{danger: persona.licencia == false, 'success': persona.licencia == true}">{{persona.licencia}}</td>
+  </tr>
+</table>
