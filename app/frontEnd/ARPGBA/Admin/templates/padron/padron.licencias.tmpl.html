@@ -1,0 +1,29 @@
+<div class="modal fade modalLicencias" id="modal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form class="form-group">
+        <div class="form-group">
+          <label for="">{{}}</label>
+          <label for="">licencia: </label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<table class="table table-responsive table-hover">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Club</th>
+      <th>Licencia</th>
+    </tr>
+  </thead>
+  <tr ng-repeat="persona in padronController.mergedPadron" ng-click="padronController.open(persona)">
+    <td>{{persona.nombre}}</td>
+    <td>{{persona.apellido}}</td>
+    <td>{{persona.club}}</td>
+    <td ng-class="{danger: persona.licencia == false, 'success': persona.licencia == true}">{{persona.licencia}}</td>
+  </tr>
+</table>

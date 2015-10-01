@@ -1,0 +1,27 @@
+<input class="form-control" name="name" ng-model="filtroPadron" placeholder="Escriba por lo que se decea filtrar" type="text"><br>
+<div class="checkbox">
+  <label>
+    <input class='' ng-init='multiselect = false' ng-model="multiselect" type='checkbox'>
+    <b>Habilitar multiseleccion</b>
+  </label>
+</div>
+<table class="table table-responsive table-hover">
+  <thead>
+    <tr>
+      <th>DNI</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Sexo</th>
+      <th>Club</th>
+      <th>Licencia</th>
+    </tr>
+  </thead>
+  <tr multiselect="{{multiselect}}" ng-repeat="persona in padronController.mergedPadron | filter:filtroPadron" selectable-row>
+    <td>{{persona.dni}}</td>
+    <td>{{persona.nombre}}</td>
+    <td>{{persona.apellido}}</td>
+    <td>{{persona.sexo}}</td>
+    <td>{{persona.club}}</td>
+    <td ng-class="{danger: persona.licencia == false, 'success': persona.licencia == true}">{{persona.licencia}}</td>
+  </tr>
+</table>
