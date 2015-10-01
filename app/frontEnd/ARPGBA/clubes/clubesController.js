@@ -5,9 +5,11 @@
         .module('club')
         .controller('clubesController', clubesController);
 
+        clubesController.$inject = ['clubService'];
 
-    function clubesController() {
+    function clubesController(clubService) {
         var clubesController = this;
 
+        clubesController.clubes = clubService.clubes;
     }
 })();

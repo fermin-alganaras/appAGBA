@@ -1,22 +1,27 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('club', [])
-        .config(function config($stateProvider){
-          $stateProvider
-          .state('ARPGBA.club', {
-            url: 'clubes',
-            views: {
-              'content@':{
-                templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubes.tmpl.html',
-                controller: 'clubesController as clubesController'
-              },
-              'sideBar@':{
-                templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/sideBar.clubes.html',
-                controller: 'clubesController as clubesController'
+  angular
+    .module('club', [])
+    .config(function config($stateProvider) {
+      $stateProvider
+        .state('ARPGBA.club', {
+          url: 'clubes',
+          views: {
+            'content@': {
+              templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubes.tmpl.html',
+              controller: 'clubesController as clubesController',
+              resolve: {
+                clubes: function(clubService) {
+                  return clubService.getClubes()
+                }
               }
+            },
+            'sideBar@': {
+              templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/sideBar.clubes.html',
+              controller: 'clubesController as clubesController'
             }
-          })
+          }
         })
+    })
 })();

@@ -8,7 +8,8 @@
     'ARPGBA.admin',
     'ARPGBA.usr',
     'padron',
-    'club'
+    'club',
+    'ui.bootstrap'
   ])
 
   .config(function config($stateProvider, $urlRouterProvider){
@@ -17,7 +18,7 @@
         url: '/',
         views:{
           'navBar': {
-            templateUrl: 'app/frontEnd/ARPGBA/templates/appNavBAr.tmpl.html'
+            templateUrl: 'app/frontEnd/ARPGBA/templates/appNavBar.tmpl.html'
           },
           'sideBar': {
             templateUrl: 'app/frontEnd/ARPGBA/templates/sideBar.tmpl.html'

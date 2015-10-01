@@ -1,21 +1,25 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('club')
-        .factory('Club', club);
+  angular
+    .module('club')
+    .factory('clubService', club);
 
-    club.$inject = [];
+  club.$inject = ['$http', 'CONSTANTS'];
 
-    function factory(dependencies) {
-        var service = {
-            function: function
-        };
+  function club($http, CONSTANTS) {
+    var service = {
+      getClubes: getClubes,
+      clubes: {}
+    };
 
-        return service;
-
-        function function() {
-
-        }
+    function getClubes() {
+      $http.get(CONSTANTS.SERVER_URL + 'clubes.json').then(function(result){
+        service.clubes =
+        result.data.clubes;
+      });
     }
+
+    return service;
+  }
 })();
