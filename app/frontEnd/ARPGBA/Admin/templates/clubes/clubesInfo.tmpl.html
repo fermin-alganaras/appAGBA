@@ -1,0 +1,42 @@
+<!--
+<div class="panel-group">
+  <div class="panel panel-info" ng-repeat="club in clubesController.clubService">
+    <div class="panel-heading">
+      <h3>{{club.club.nombre}}</h3>
+    </div>
+    <div class="panel-body" ng-repeat="patinador in club.patinadores">
+      {{patinador.nombre}}
+      {{patinador.apellido}}
+      {{patinador.licencia}}
+    </div>
+  </div>
+</div> -->
+<div ng-if="clubInfo.isSelected()">
+
+  <ul class="nav nav-pills">
+    <li><a>Patinadores</a></li>
+    <li><a>Delegados</a></li>
+    <li><a>Tecnicos</a></li>
+  </ul>
+
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h5 class="panel-title">{{clubInfo.club.club.nombre}}</h5>
+    </div>
+    <div class="panel-body">
+      <label for="">Patinadores</label>
+      <ul class="nav nav-stacked nav-pills" ng-repeat="patinador in clubInfo.club.patinadores">
+        <li><a>{{patinador.nombre}} {{patinador.apellido}} {{patinador.licencia}}</a></li>
+      </ul><br>
+      <label for="">Tecnicos</label>
+      <ul class="nav nav-stacked nav-pills" ng-repeat="tecnico in clubInfo.club.tecnicos">
+        <li><a>{{tecnico.nombre}} {{tecnico.apellido}} {{tecnico.licencia}}</a></li>
+      </ul><br>
+      <label for="">Delegados</label>
+      <ul class="nav nav-stacked nav-pills" ng-repeat="delegado in clubInfo.club.delegados">
+        <li><a>{{delegado.nombre}} {{delegado.apellido}} {{delegado.licencia}}</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
