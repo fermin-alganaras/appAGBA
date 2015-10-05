@@ -10,13 +10,14 @@
   function club($http, CONSTANTS) {
     var service = {
       getClubes: getClubes,
-      clubes: {}
+      clubes: {},
+
     };
 
     function getClubes() {
-      $http.get(CONSTANTS.SERVER_URL + 'clubes.json').then(function(result){
+      $http.get(CONSTANTS.SERVER_URL + 'clubes.json').then(function(result) {
         service.clubes =
-        result.data.clubes;
+          result.data.clubes;
       });
     }
 

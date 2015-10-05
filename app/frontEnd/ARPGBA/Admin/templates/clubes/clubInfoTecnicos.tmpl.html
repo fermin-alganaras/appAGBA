@@ -1,0 +1,22 @@
+<ul class="nav nav-pills">
+<li><a ui-sref="ARPGBA.club.patinadores({selectedClub:club.club.nombre})">Patinadores</a></li>
+<li><a ui-sref="ARPGBA.club.delegados({selectedClub:club.club.nombre})">Delegados</a></li>
+<li class="active"><a ui-sref="ARPGBA.club.tecnicos({selectedClub:club.club.nombre})">Tecnicos</a></li>
+</ul><br>
+<input class="form-control" type="text" ng-model="filtro" placeholder="Escriba por lo que se desea filtrar">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Licencia</th>
+      <th>Informacion</th>
+    </tr>
+  </thead>
+  <tr ng-repeat="tecnico in clubInfo.club.tecnicos | filter:filtro">
+    <td>{{tecnico.nombre}}</td>
+    <td>{{tecnico.apellido}}</td>
+    <td>{{tecnico.licencia}}</td>
+    <td><a ng-click="clubInfo.open(tecnico)"><span class="glyphicon glyphicon-pencil"></span></a></td>
+  </tr>
+</table>
