@@ -1,22 +1,12 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ListaBnaFe
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class ListaBnaFe {
-    private $idListaBnaFe;
-    private $fechaCreacion;
-    private $refArchivo;
-    private $club;
-    private $torneo;
+    public $idListaBnaFe;
+    public $fechaCreacion;
+    public $refArchivo;
+    public $club;
+    public $torneo;
     
     
     function __construct($fechaCreacion, $refArchivo) {

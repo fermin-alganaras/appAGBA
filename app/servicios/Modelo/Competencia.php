@@ -1,23 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Competencia
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Competencia {
     
-    private $idCompetencia;
-    private $denominacion;
-    private $edad;
-    private $archivo;
-    private $torneo;
+    public $idCompetencia;
+    public $denominacion;
+    public $edad;
+    public $archivo;
+    public $torneo;
     
     function __construct($denominacion, $edad, $archivo) {
         $this->denominacion = $denominacion;

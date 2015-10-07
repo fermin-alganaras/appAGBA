@@ -1,23 +1,15 @@
 <?php
+namespace Modelo;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+include_once ('Persona.php');
 
-/**
- * Description of Patinador
- *
- * @author JuanPAblo
- */
 class Patinador extends Persona {
     
-    private $idPatinador;
-    private $catEsc;
-    private $catLibre;
-    private $catDanza;
-    private $ultimaComp;
+    public $idPatinador;
+    public $catEsc;
+    public $catLibre;
+    public $catDanza;
+    public $ultimaComp;
     
     function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta, $ultimaComp) {
         parent::__construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta);

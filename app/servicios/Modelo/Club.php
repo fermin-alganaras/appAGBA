@@ -1,26 +1,19 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Club
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Club {
     
-    private $idClub;
-    private $nombre;
-    private $presidente;
-    private $secretario;
-    private $usuario;
+    public $idClub;
+    public $nombre;
+    public $domicilio;
+    public $presidente;
+    public $secretario;
+    public $usuario;
     
-    function __construct($nombre) {
+    function __construct($nombre, $presidente, $secretario) {
         $this->nombre = $nombre;
+        $this->presidente= $presidente;
+        $this->secretario= $secretario;
     }
     
     function getIdClub() {
@@ -63,6 +56,16 @@ class Club {
     function setUsuario($usuario) {
         $this->usuario = $usuario;
     }
+    
+    function getDomicilio() {
+        return $this->domicilio;
+    }
+
+    function setDomicilio($domicilio) {
+        $this->domicilio = $domicilio;
+    }
+
+
 
 
 }

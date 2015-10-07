@@ -1,20 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Tecnico
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Tecnico extends Persona {
     
-    private $idTecnico;
-    private $categoria;
+    public $idTecnico;
+    public $categoria;
     
     
     function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta) {
