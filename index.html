@@ -4,11 +4,14 @@
 <head>
   <meta charset="utf-8">
   <title>Gestion ARPGBA</title>
+  <link rel="icon" href="app/frontEnd\ARPGBA\common\images\logo.jpg" media="screen" title="no title" charset="utf-8">
 </head>
+
 <body ng-app="ARPGBA">
   <link rel="stylesheet" href="bower_components/bootstrap\dist\css\bootstrap.min.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="app/frontEnd\ARPGBA\common\style\estilo.css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="bower_components/angular-bootstrap\ui-bootstrap-csp.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="bower_components/jquery-ui\themes\smoothness\jquery-ui.min.css" media="screen" title="no title" charset="utf-8">
 
   <div class="container-fluid">
     <div class="row" ui-view="navBar"></div>
@@ -24,6 +27,8 @@
   <script type="text/javascript" src="bower_components/lodash\lodash.min.js"></script>
   <script type="text/javascript" src="bower_components/ui-router\release\angular-ui-router.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-permission\dist\angular-permission.js"></script>
+  <script type="text/javascript" src="bower_components/jquery-ui\ui\datepicker.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-date\src\date.js"></script>
   <script type="text/javascript" src="bower_components/angular-bootstrap\ui-bootstrap-tpls.min.js"></script>
   <script type="text/javascript" src="app/frontEnd/ARPGBA\common\modelos\ARPGBA.js"></script>
   <script type="text/javascript" src="app/frontEnd/ARPGBA\common\modelos\clubes-modelo.js"></script>
@@ -37,6 +42,8 @@
   <script type="text/javascript" src="app/frontEnd\ARPGBA\clubes\clubes.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\usuarios\usuario.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\usuarios\usuarios.service.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\usuarios\usuariosController.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\login\loginController.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\tecnicos\tecnicos.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\delegados\delegados.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\padron.js"></script>
@@ -44,6 +51,8 @@
   <script type="text/javascript" src="app/frontEnd\ARPGBA\clubes\modal\modalController.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\clubes\clubesController.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\Admin\clubes\clubesInfoController.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\torneos\torneos.js"></script>
+  <script type="text/javascript" src="app/frontEnd\ARPGBA\torneos\torneosController.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\delegados\delegados.service.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\patinadores\patinadores.service.js"></script>
   <script type="text/javascript" src="app/frontEnd\ARPGBA\padron\tecnicos\tecnicos.service.js"></script>

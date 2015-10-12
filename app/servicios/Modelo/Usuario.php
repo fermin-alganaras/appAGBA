@@ -12,20 +12,20 @@
  * @author JuanPAblo
  */
 class Usuario {
-    
+
     private $idUsuario;
     private $user;
     private $pass;
     private $super;
     private $club;
-    
+
     function __construct($user, $pass, $super) {
         $this->user = $user;
         $this->pass = $pass;
         $this->super = $super;
     }
-    
-    
+
+
 
     function getIdUsuario() {
         return $this->idUsuario;
@@ -58,7 +58,7 @@ class Usuario {
     function setSuper($super) {
         $this->super = $super;
     }
-    
+
     function getClub() {
         return $this->club;
     }
@@ -68,7 +68,7 @@ class Usuario {
     }
 
 
-    
-    
-    
+
+
+
 }

@@ -1,6 +1,12 @@
 <div class="">
-  <h3 style="margin-left:25%"><small>Clubes</small></h4><hr>
+    <h4 style="margin-left:25%">
+      <small>Clubes</small>
+    </h4>
+
+  <hr>
   <ul class="nav nav-pills nav-stacked" ng-repeat="club in clubesController.clubesPadron">
-    <li><a ui-sref="ARPGBA.club.patinadores({selectedClub:club.club.nombre})" ng-click="clubesController.selectClub(club)">{{club.club.nombre}}</a></li>
+    <li>
+      <a ng-click="clubesController.selectClub(club)" ui-sref="ARPGBA.club.patinadores({selectedClub:club.club.nombre})">{{club.club.nombre}}</a>
+    </li>
   </ul>
 </div>
