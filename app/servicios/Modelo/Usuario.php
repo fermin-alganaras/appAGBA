@@ -6,13 +6,15 @@ class Usuario {
     public $idUsuario;
     public $user;
     public $pass;
-    public $super;
+    public $tipo;
+    public $estado;
     public $club;
     
-    function __construct($user, $pass, $super) {
+    function __construct($user, $pass, $tipo, $estado) {
         $this->user = $user;
         $this->pass = $pass;
-        $this->super = $super;
+        $this->tipo = $tipo;
+        $this->estado= $estado;
     }
 
 
@@ -56,6 +58,23 @@ class Usuario {
     function setClub($club) {
         $this->club = $club;
     }
+    
+    function getTipo() {
+        return $this->tipo;
+    }
+
+    function getEstado() {
+        return $this->estado;
+    }
+
+    function setTipo($tipo) {
+        $this->tipo = $tipo;
+    }
+
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
 
 
 
