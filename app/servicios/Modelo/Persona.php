@@ -1,30 +1,20 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Persona
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 abstract class Persona {
     
-    protected $idPersona;
-    protected $apellido;
-    protected $nombre;
-    protected $dni;
-    protected $fNacimiento;
-    protected $sexo;
-    protected $nacionalidad;
-    protected $exportada;
-    protected $fechaAlta;
-    protected $licencia;
-    protected $club;
-    protected $domicilio;
+    public $idPersona;
+    public $apellido;
+    public $nombre;
+    public $dni;
+    public $fNacimiento;
+    public $sexo;
+    public $nacionalidad;
+    public $exportada;
+    public $fechaAlta;
+    public $licencia;
+    public $club;
+    public $domicilio;
             
     function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta) {
         $this->apellido = $apellido;
@@ -35,6 +25,7 @@ abstract class Persona {
         $this->nacionalidad = $nacionalidad;
         $this->exportada= $exportada;
         $this->fechaAlta= $fechaAlta;
+        $this->licencia=null;
     }
     
     function getIdPersona() {
