@@ -1,15 +1,25 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('club')
-        .controller('clubesController', clubesController);
+  angular
+    .module('club')
+    .controller('clubesController', clubesController);
 
-        clubesController.$inject = ['clubService'];
+  clubesController.$inject = ['clubService', 'clubPadronService', '$scope', '$stateParams'];
 
-    function clubesController(clubService) {
-        var clubesController = this;
+  function clubesController(clubService, clubPadronService, $scope, $stateParams) {
+    var clubesController = this;
 
-        clubesController.clubes = clubService.clubes;
+
+
+    clubesController.clubesPadron = clubPadronService.clubPadron;
+    clubesController.isSelected = clubPadronService.isSelected;
+    clubesController.selectClub = selectClub;
+      $scope.selectedClub = $stateParams.selectedClub;
+
+    function selectClub(club) {
+      clubPadronService.setSelected(club);
     }
+
+  }
 })();

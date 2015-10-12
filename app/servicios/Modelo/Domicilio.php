@@ -1,23 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Domicilio
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Domicilio {
-    private $idDomicilio;
-    private $direccion;
-    private $cp;
-    private $telefono;
-    private $localidad;
-    private $provincia;
+    public $idDomicilio;
+    public $direccion;
+    public $cp;
+    public $telefono;
+    public $localidad;
+    public $provincia;
     
     function __construct($direccion, $cp, $telefono, $localidad, $provincia) {
         $this->direccion = $direccion;

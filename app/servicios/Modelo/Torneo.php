@@ -1,25 +1,15 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Torneo
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Torneo {
    
-    private $idTorneo;
-    private $denominacion;
-    private $fInicio;
-    private $fFin;
-    private $refArchivo;
-    private $listasBnaFe;
-    private $competencias;
+    public $idTorneo;
+    public $denominacion;
+    public $fInicio;
+    public $fFin;
+    public $refArchivo;
+    public $listasBnaFe;
+    public $competencias;
     
     function __construct($denominacion, $fInicio, $fFin) {
         $this->denominacion = $denominacion;

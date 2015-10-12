@@ -1,21 +1,11 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Ascenso
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Ascenso {
-    private $idAscenso;
-    private $totalPat;
-    private $maxRango;
-    private $repitencia;
+    public $idAscenso;
+    public $totalPat;
+    public $maxRango;
+    public $repitencia;
     
     
     

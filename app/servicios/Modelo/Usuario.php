@@ -1,23 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Usuario
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Usuario {
     
-    private $idUsuario;
-    private $user;
-    private $pass;
-    private $super;
-    private $club;
+    public $idUsuario;
+    public $user;
+    public $pass;
+    public $super;
+    public $club;
     
     function __construct($user, $pass, $super) {
         $this->user = $user;

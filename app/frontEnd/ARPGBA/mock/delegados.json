@@ -54,6 +54,17 @@
      "domicilio":"Austin Powers 555",
      "club":"C.A.B.J",
      "licencia": false
-    }
+   },
+   {
+     "dni": 6,
+     "nombre":"Gabriel",
+     "apellido":"Heinze",
+     "FechaNacimiento":"15/2/1200",
+     "sexo":"M",
+     "nacionalidad":"Argentina",
+     "domicilio":"calle Tomba putin 1235",
+     "club":"El tomba puto",
+     "licencia": false
+   }
   ]
 }

@@ -1,27 +1,19 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Licencia
- *
- * @author JuanPAblo
- */
+namespace Modelo;
 class Licencia {
     
-    private $IdLicencia;
-    private $numero;
-    private $costo;
-    private $tipo;
+    public $IdLicencia;
+    public $numero;
+   
+    public $tipo;
+    public $activa;
     
     
-    function __construct($numero, $costo, $tipo) {
+    function __construct($numero, $tipo, $activa) {
         $this->numero = $numero;
-        $this->costo = $costo;
+        $this->tipo= $tipo;
+        $this->activa= $activa;
     }
     
     function getIdLicencia() {
@@ -32,9 +24,7 @@ class Licencia {
         return $this->numero;
     }
 
-    function getCosto() {
-        return $this->costo;
-    }
+    
 
     function setIdLicencia($IdLicencia) {
         $this->IdLicencia = $IdLicencia;
@@ -44,9 +34,7 @@ class Licencia {
         $this->numero = $numero;
     }
 
-    function setCosto($costo) {
-        $this->costo = $costo;
-    }
+    
     
     function getTipo() {
         return $this->tipo;
@@ -55,6 +43,16 @@ class Licencia {
     function setTipo($tipo) {
         $this->tipo = $tipo;
     }
+    
+    function getActiva() {
+        return $this->activa;
+    }
+
+    function setActiva($activa) {
+        $this->activa = $activa;
+    }
+
+
 
 
 

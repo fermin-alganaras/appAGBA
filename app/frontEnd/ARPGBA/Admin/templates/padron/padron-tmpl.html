@@ -1,4 +1,4 @@
-<input class="form-control" name="name" ng-model="filtroPadron" placeholder="Escriba por lo que se decea filtrar" type="text"><br>
+<input class="form-control" name="name" ng-model="filtroPadron" placeholder="Escriba por lo que se desea filtrar" type="text"><br>
 <div class="checkbox">
   <label>
     <input class='' ng-init='multiselect = false' ng-model="multiselect" type='checkbox'>
@@ -25,3 +25,4 @@
     <td ng-class="{danger: persona.licencia == false, 'success': persona.licencia == true}">{{persona.licencia}}</td>
   </tr>
 </table>
+ <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>

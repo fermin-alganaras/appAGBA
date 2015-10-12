@@ -54,6 +54,17 @@
      "domicilio":"Austin Powers 555",
      "club":"C.A.B.J",
      "licencia": false
+    },
+    {
+     "dni": 6,
+     "nombre":"Jaime",
+     "apellido":"Ayovi",
+     "FechaNacimiento":"15/2/1992",
+     "sexo":"M",
+     "nacionalidad":"Ecuatoriano",
+     "domicilio":"Calle tomba puto",
+     "club":"El tomba puto",
+     "licencia": false
     }
   ]
 }
