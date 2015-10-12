@@ -14,8 +14,8 @@ class Usuario {
         $this->pass = $pass;
         $this->super = $super;
     }
-    
-    
+
+
 
     function getIdUsuario() {
         return $this->idUsuario;
@@ -48,7 +48,7 @@ class Usuario {
     function setSuper($super) {
         $this->super = $super;
     }
-    
+
     function getClub() {
         return $this->club;
     }
@@ -58,7 +58,7 @@ class Usuario {
     }
 
 
-    
-    
-    
+
+
+
 }
