@@ -1,16 +1,44 @@
 <?php
+session_start();
 
-include_once ('..\..\..\Controlador\ControladorPatinador.php');
-
-
+require_once ('..\..\..\Controlador\ControladorPatinador.php');
+require_once ('..\..\..\Controlador\ControladorUsuario.php');
 
 $cPat= new ControladorPatinador;
+if ($_SESSION['user']) {
+    if ($_SESSION['user']->getClub()->getTipo()=='club') {
+        $datos=  json_decode($_POST['patinadores']);
+        
+        foreach ($datos as $patinador) {
+                $b=$cPat->insertarPatinador($patinador['apellido'], $patinador['nombre'], $patinador['dni'],
+                        $patinador['fNacimiento'], $patinador['sexo'], $$patinador['nacionalidad'], 
+                        false, date(DATE_W3C), $_SESSION['user']->getClub()->getIdClub(),
+                        $patinador['domicilio']['direccion'], $patinador['domicilio']['cp'],
+                        $patinador['domicilio']['telefono'], $patinador['domicilio']['localidad'], $patinador['domicilio']['localidad'], 
+                        $patinador['idCatEsc'], $patinador['idCatLibr'], $patinador['idCatDza']);
+                if($b==false){
+                    return false;
+                }
+        }
+        return true;
+        
+    }else{
+        $datos=  json_decode($_POST['patinadores']);
+        foreach ($datos as $patinador) {
+                $b=$cPat->insertarPatinador($patinador['apellido'], $patinador['nombre'], $patinador['dni'],
+                        $patinador['fNacimiento'], $patinador['sexo'], $$patinador['nacionalidad'], 
+                        false, date(DATE_W3C), $patinador['idClub'], $patinador['domicilio']['direccion'],
+                        $patinador['domicilio']['cp'], $patinador['domicilio']['telefono'], 
+                        $patinador['domicilio']['localidad'], $patinador['domicilio']['localidad'], 
+                        $patinador['idCatEsc'], $patinador['idCatLibr'], $patinador['idCatDza']);
+                if($b==false){
+                    return false;
+                }
+        }
+        return true;
+    }
+}
+   
+
+
   
-$b=$cPat->insertarPatinador($_POST['apellido'], $_POST['nombre'], $_POST['dni'], $_POST['fNacimiento'],
-        $_POST['sexo'], $_POST['nacionalidad'], false, date(DATE_ATOM), 1, $_POST['direccion'], 
-        $_POST['cp'], $_POST['telefono'], $_POST['localidad'], $_POST['provincia'], $_POST['esc'],
-        $_POST['libr'], $_POST['dza']);
-
-$t=$cPat->listarTodosXClub(1);
-
-echo print_r(json_encode($t));
