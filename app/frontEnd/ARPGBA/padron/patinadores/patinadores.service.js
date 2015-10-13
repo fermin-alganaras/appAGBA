@@ -12,9 +12,13 @@
             getPatinadores: getPatinadores
         };
 
-
+        var config = {
+          method: 'POST',
+          url: 'app/servicios/Salidas/Padron/Patinador/listarPatinadores.php',
+          data: {idClub: '0'}
+        }
         function getPatinadores() {
-          return $http.get(CONSTANTS.SERVER_URL + 'patinadores.json');
+          return $http(config);
         }
         return service;
     }

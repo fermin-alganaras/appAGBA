@@ -12,36 +12,36 @@
  * @author JuanPAblo
  */
 class ControladorBaseDeDatos {
-    
+
     private $host= "localhost";
     private $user= "root";
-    private $pass= "4984313";
+    private $pass= "root";
     private $base= "appagba";
     private $con= null;
-    
+
     function __construct() {
-        
+
     }
-    
+
     private function conectar(){
         $this->con= new mysqli($this->host, $this->user, $this->pass, $this->base, "3306");
     }
-    
+
     public function getConexion(){
         if($this->con != null){
             return $this->con;
         } else {
             $this->conectar();
-            echo 'Se creo conexion';
+            //echo 'Se creo conexion';
             return $this->con;
         }
     }
-    
+
     public function liberarResultados(){
         $this->con->free();
     }
-    
+
     public function cerrarConexion(){
         $this->con->close();
-    } 
+    }
 }
