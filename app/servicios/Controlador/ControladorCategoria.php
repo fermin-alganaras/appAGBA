@@ -21,6 +21,7 @@ class ControladorCategoria extends ControladorGeneral {
         try{
             $r=static::$bd->getConexion()->query("SELECT * FROM categoria WHERE idCategoria=". $id)->fetch_array();
             $cat= new Modelo\Categoria($r['denominacion'], $r['orden'], $r['modo']);
+            $cat->setIdCategoria($r['idCategoria']);
             return $cat;
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();

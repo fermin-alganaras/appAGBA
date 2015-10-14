@@ -23,12 +23,7 @@ class ControladorUsuario extends ControladorGeneral {
         } catch (mysqli_sql_exception $ex) {
             echo $ex->getMessage();
         }
-
-        if ($u!=NULL) {
-            return $u;
-        }else{
-            return NULL;
-        }
+        return $u;
     }
 
     public function agregarUsuario($user, $pass, $tipo, $idClub){

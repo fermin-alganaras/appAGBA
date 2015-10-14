@@ -9,12 +9,14 @@ class Usuario {
     public $tipo;
     public $estado;
     public $club;
+    public $ultimaSesion;
     
-    function __construct($user, $pass, $tipo, $estado) {
+    function __construct($user, $pass, $tipo, $estado, $ultimaSesion) {
         $this->user = $user;
         $this->pass = $pass;
         $this->tipo = $tipo;
         $this->estado= $estado;
+        $this->ultimaSesion= $ultimaSesion;
     }
 
 
@@ -74,6 +76,16 @@ class Usuario {
     function setEstado($estado) {
         $this->estado = $estado;
     }
+    
+    function getUltimaSesion() {
+        return $this->ultimaSesion;
+    }
+
+    function setUltimaSesion($ultimaSesion) {
+        $this->ultimaSesion = $ultimaSesion;
+    }
+
+
 
 
 

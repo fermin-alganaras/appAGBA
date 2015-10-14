@@ -29,9 +29,11 @@ class ControladorClub extends ControladorGeneral{
             $club= new Modelo\Club($r['nombre'], $r['presidente'], $r['secretario']);
             $club->setIdClub($r['idClub']);
             $club->setDomicilio($this->cDom->traerDomicilioXID($r['idDomicilio']));
+            return $club;
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
+        
     }
 
 }

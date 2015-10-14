@@ -25,11 +25,7 @@ class ControladorPatinador extends ControladorGeneral{
     public function insertarPatinador($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta,
             $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $idCatEsc, $idCatLibr, $idCatDza){
         try{
-            if(static::$bd->getConexion()->query("START TRANSACTION")){
-                echo 'Se inicio transaccion \n';
-            }else {
-                echo 'No se inicio transaccion';
-            }
+            static::$bd->getConexion()->query("START TRANSACTION");
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
             if(!static::$bd->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
@@ -84,12 +80,13 @@ class ControladorPatinador extends ControladorGeneral{
             $pat= new \Modelo\Patinador($rPer['apellido'], $rPer['nombre'], $rPer['dni'], $rPer['fNacimiento'],
                     $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta'], $rPat['ultimaComp']);
             $pat->setIdPatinador($rPat['idPatinador']);
-            $pat->setIdPersona($rPat['idPersona']);
+            $pat->setIdPersona($rPat['idPer']);
             $pat->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
             $pat->setLicencia($this->cLic->traerLicenciaXIdPersona($pat->getIdPersona()));
             $pat->setCatEsc($this->cCat->traerCategoriaXID($rPat['idCatEsc']));
             $pat->setCatLibre($this->cCat->traerCategoriaXID($rPat['idCatLibre']));
             $pat->setCatDanza($this->cCat->traerCategoriaXID($rPat['idCatDanza']));
+            $pat->setClub($this->cClub->traerClubXID($rPer['idClub']));
             return $pat;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();
@@ -97,26 +94,32 @@ class ControladorPatinador extends ControladorGeneral{
     }
     
     public function listarTodosXClub($idClub){
+        $datos_persona= array();
         $patinadores_array= array();
         try{
             if ($idClub!=0) {
-                 $r1= static::$bd->getConexion()->query("SELECT * FROM persona WHERE idClub=". $idClub);
+                 $r1= static::$bd->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub");
+                 
                  while ($f=$r1->fetch_array()) {
-                     $r2=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona=". $f['idPersona']);
+                    $idP=$f['idPersona'];
+                    $r2=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP");
                     if ($f2=$r2->fetch_array()) {
                         array_push($patinadores_array, $this->armarPatinador($f, $f2));
                     }
                  }
             }else {
                 $r1= static::$bd->getConexion()->query("SELECT * FROM persona");
-                 while ($f=$r1->fetch_array()) {
-                     $idP=$f['idPersona'];
-                     $r2=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP");
-                     while ($f2=$r2->fetch_array()) {
-                        
-                        array_push($patinadores_array, $this->armarPatinador($f, $f2));
+                while ($f=$r1->fetch_array()) {
+                     array_push($datos_persona, $f);                
+                }    
+                $r1->free();
+                foreach ($datos_persona as $fila) {
+                    $idP=$fila['idPersona'];
+                    $r2= static::$bd->getConexion()->query("select * from patinador where idPer=".$idP);
+                    while ($f2= $r2->fetch_array()) {
+                       array_push($patinadores_array, $this->armarPatinador($fila, $f2));
                     }
-                 }
+                }
             }
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
@@ -144,6 +147,22 @@ class ControladorPatinador extends ControladorGeneral{
         }
         
         return $patinadores_array;
+    }
+    
+    public function creaOHabilitaLicencia ($idPat, $tipo){
+        $pat= $this->traerPatinadorXID($idPat);
+        if ($pat->getLicencia()== null) {
+            $this->cLic->nuevaLicencia($tipo, $activa);
+            $idLic= $this->cLic->traerUltimoId();
+            $idP= $pat->getIdPersona();
+            static::$bd->getConexion->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
+            return true;
+        }elseif($pat->getLicencia()->getActiva()==false){
+            $this->cLic->habilitaODeshabilita($pat->getLicencia());
+            return true;
+        }else{
+            return false;
+        }
     }
     
     

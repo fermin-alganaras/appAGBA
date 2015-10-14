@@ -9,9 +9,9 @@ class ControladorLicencia extends ControladorGeneral{
     
     public function traerLicenciaXIdPersona($id){
         try {
-            $rLic= static::$bd->getConexion()->query("SELECT * FROM licencia WHERE idPersona=".$id);
+            $rLic= static::$bd->getConexion()->query("SELECT * FROM licencia WHERE idPersona='$id");
             while($rL=$rLic->fetch_array()){
-                $lic= new Licencia($rL['numero'], $rL['costo'], $rL['tipo'], $rL['activa']);
+                $lic= new Modelo\Licencia($rL['numero'], $rL['tipo'], $rL['activa']);
                 $lic->setIdLicencia($rL['idLicencia']);
                 return $lic;
             }            
@@ -20,9 +20,9 @@ class ControladorLicencia extends ControladorGeneral{
         }
     }
     
-    public function nuevaLicencia ($tipo, $activa, $idPersona){
+    public function nuevaLicencia ($tipo, $activa){
         try{
-            static::$bd->getConexion()->query("INSERT INTO licencia VALUES(null, E/T,'$tipo','$activa','$idPersona')");
+            static::$bd->getConexion()->query("INSERT INTO licencia VALUES(null, E/T,'$tipo','$activa')");
         } catch(mysqli_sql_exception $ex){
             echo 'Error: '. $ex->getMessage();
         }
@@ -35,10 +35,11 @@ class ControladorLicencia extends ControladorGeneral{
     
     public function habilitaODeshabilita(Licencia $lic){
         try {
-            if (!$lic->getActiva()) {
-                static::$bd->getConexion->query("UPDATE licencia activa=true");
+            if (!$lic->getActiva()==true) {
+                $id= $lic->getIdLicencia();
+                static::$bd->getConexion->query("UPDATE licencia SET (activa=true) WHERE idLicencia='$id" );
             }else {
-                static::$bd->getConexion->query("UPDATE licencia activa=false");
+                static::$bd->getConexion->query("UPDATE licencia SET (activa=false) WHERE idLicencia='$id");
             }
             
         } catch (mysqli_sql_exception $ex) {

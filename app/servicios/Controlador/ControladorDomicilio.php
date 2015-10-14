@@ -17,7 +17,7 @@ class ControladorDomicilio extends ControladorGeneral {
     
     public function traerUltimoId(){
         $r=static::$bd->getConexion()->query("SELECT MAX(idDomicilio) AS id FROM domicilio" )->fetch_array();
-        echo 'ultimo id de domicilio'. $r['id'];
+        
         return $r['id'];    
     }
     
