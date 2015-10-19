@@ -1,15 +1,15 @@
 <?php
 
 require_once '..\..\..\Modelo\Licencia.php';
-class ControladorLicencia extends ControladorGeneral{
+class ControladorLicencia {
     
     function __construct() {
-        parent::__construct();
+       
     }
     
     public function traerLicenciaXIdPersona($id){
         try {
-            $rLic= static::$bd->getConexion()->query("SELECT * FROM licencia WHERE idPersona='$id");
+            $rLic= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM licencia WHERE idLicencia='$id'");
             while($rL=$rLic->fetch_array()){
                 $lic= new Modelo\Licencia($rL['numero'], $rL['tipo'], $rL['activa']);
                 $lic->setIdLicencia($rL['idLicencia']);
@@ -22,14 +22,16 @@ class ControladorLicencia extends ControladorGeneral{
     
     public function nuevaLicencia ($tipo, $activa){
         try{
-            static::$bd->getConexion()->query("INSERT INTO licencia VALUES(null, E/T,'$tipo','$activa')");
+            if(!ServidorControladores::getConBD()->getConexion()->query("INSERT INTO licencia VALUES(null, 'E/T','$tipo','$activa')")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
         } catch(mysqli_sql_exception $ex){
             echo 'Error: '. $ex->getMessage();
         }
     }
     
     public function traerUltimoId(){
-        $r=static::$bd->getConexion->query("SELECT MAX(idLicencia) AS id FROM licencia" )->fetch_array();
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idLicencia) AS id FROM licencia" )->fetch_array();
         return $r['id'];    
     }
     
@@ -37,13 +39,25 @@ class ControladorLicencia extends ControladorGeneral{
         try {
             if (!$lic->getActiva()==true) {
                 $id= $lic->getIdLicencia();
-                static::$bd->getConexion->query("UPDATE licencia SET (activa=true) WHERE idLicencia='$id" );
+                ServidorControladores::getConBD()->getConexion->query("UPDATE licencia SET (activa=true) WHERE idLicencia='$id" );
             }else {
-                static::$bd->getConexion->query("UPDATE licencia SET (activa=false) WHERE idLicencia='$id");
+                ServidorControladores::getConBD()->getConexion->query("UPDATE licencia SET (activa=false) WHERE idLicencia='$id");
             }
             
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
+        }
+    }
+    
+    public function defineLicencia($catEsc, $catLibr, $catDza){
+        if (($catEsc->getOrden()>=$catLibr->getOrden()||($catLibr==null))
+                &&(($catEsc->getOrden()>=$catDza->getOrden())||($catDza==null))) {
+            return $catEsc->getTipoLicencia();
+        }elseif (($catEsc->getOrden()<=$catLibr->getOrden()||($catEsc==null))
+                &&(($catLibr->getOrden()>=$catDza->getOrden())||($catDza==null))) {
+            return $catLibr->getTipoLicencia();
+        }else{
+            return $catDza->getTipoLicencia();
         }
     }
 

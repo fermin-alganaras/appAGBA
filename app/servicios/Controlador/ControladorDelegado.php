@@ -7,55 +7,55 @@ require_once ('ControladorLicencia.php');
 require_once ('ControladorCategoria.php');
 require_once ('ControladorClub.php');
 
-class ControladorDelegado extends \Modelo\Persona{
+class ControladorDelegado extends ControladorGeneral{
     private $cDom;
     private $cLic;
     private $cCat;
     private $cClub;
     function __construct() {
         parent::__construct();
-        $this->cDom= new ControladorDomicilio;
-        $this->cLic= new ControladorLicencia;
-        $this->cCat= new ControladorCategoria;
-        $this->cClub= new ControladorClub;
+        $this->cDom= ServidorControladores::getConDomicilio();
+        $this->cLic= ServidorControladores::getConLicencia();
+        $this->cCat= ServidorControladores::getConCategoria();
+        $this->cClub= ServidorControladores::getConClub();
     }
     
     public function insertarDelegado($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta,
             $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $email){
         try{
-            if(static::$bd->getConexion()->query("START TRANSACTION")){
-                echo 'Se inicio transaccion \n';
-            }else {
-                echo 'No se inicio transaccion';
+            if(!ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION")){
+              die(ServidorControladores::getConBD()->getConexion()->error);
             }
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
-            if(!static::$bd->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
+            if(!ServidorControladores::getConBD()->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
                 $fNacimiento','$sexo','$nacionalidad','$exportada','$fechaAlta','$idClub','$idDomicilio',null)")){
-                die(static::$bd->getConexion()->error);
-                static::$bd->getConexion()->query("ROLLBACK");
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
+                die(ServidorControladores::getConBD()->getConexion()->error);
+                
             }
-            $idP=static::$bd->getConexion()->query("SELECT MAX(idPersona) AS id FROM persona")->fetch_array();
+            $idP=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPersona) AS id FROM persona")->fetch_array();
             $idPer=$idP['id'];
             
-            if(!static::$bd->getConexion()->query("insert into delegado values(null,'$email','$idPer')")){
-                    die(static::$bd->getConexion()->error);
-                    static::$bd->getConexion()->query("ROLLBACK");
+            if(!ServidorControladores::getConBD()->getConexion()->query("insert into delegado values(null,'$email','$idPer')")){
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");    
+                die(ServidorControladores::getConBD()->getConexion()->error);
+                    
             }            
-            static::$bd->getConexion()->query("COMMIT");
+            ServidorControladores::getConBD()->getConexion()->query("COMMIT");
             return TRUE;
         }  catch (mysqli_sql_exception $ex){
-            static::$bd->getConexion()->query("ROLLBACK");
+            ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             echo 'Error: '. $ex->getMessage();
             return FALSE;
         }
     }
     
-    public function traerDelegadoXID(int $id){
+    public function traerDelegadoXID($id){
         try{
-            $rDel=  static::$bd->getConexion()->query("SELECT * FROM delegado WHERE idDelegado=' $id")->fetch_array();
+            $rDel=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM delegado WHERE idDelegado='$id'")->fetch_array();
             $idP=$rDel['idPersona'];
-            $rPer=  static::$bd->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP")->fetch_array();
+            $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'")->fetch_array();
             
             $del= $this->armarDelegado($rPer, $rDel);
             return $del;
@@ -84,19 +84,19 @@ class ControladorDelegado extends \Modelo\Persona{
         $delegado_array= array();
         try{
             if ($idClub!=0) {
-                 $r1= static::$bd->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub");
+                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub'");
                  while ($f=$r1->fetch_array()) {
                      $idP=$f['idPersona'];
-                     $r2=  static::$bd->getConexion()->query("SELECT * FROM delegado WHERE idPersona='$idP");
+                     $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM delegado WHERE idPersona='$idP'");
                     if ($f2=$r2->fetch_array()) {
                         array_push($delegado_array, $this->armarPatinador($f, $f2));
                     }
                  }
             }else {
-                $r1= static::$bd->getConexion()->query("SELECT * FROM persona");
+                $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona");
                  while ($f=$r1->fetch_array()) {
                      $idP= $f['idPersona'];
-                     $r2=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP");
+                     $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP'");
                      while ($f2=$r2->fetch_array()) {
                         $f2=$r2->fetch_array();
                         array_push($delegado_array, $this->armarPatinador($f, $f2));

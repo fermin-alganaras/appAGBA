@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-require_once ('..\..\..\Controlador\ControladorPatinador.php');
-require_once ('..\..\..\Controlador\ControladorUsuario.php');
+require_once ('..\..\..\Controlador\ServidorControladores.php');
 require_once ('..\..\..\Modelo\Usuario.php');
 
-$cPat= new ControladorPatinador;
+$cPat= ServidorControladores::getConPatinador();
 $user=  unserialize($_SESSION['user']);
 if ($user) {
     if ($user->getTipo()=='club') {

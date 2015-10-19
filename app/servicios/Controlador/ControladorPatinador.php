@@ -8,53 +8,52 @@ require_once ('ControladorLicencia.php');
 require_once ('ControladorCategoria.php');
 require_once ('ControladorClub.php');
 
-class ControladorPatinador extends ControladorGeneral{
+class ControladorPatinador {
     
     private $cDom;
     private $cLic;
     private $cCat;
     private $cClub;
     function __construct() {
-        parent::__construct();
-        $this->cDom= new ControladorDomicilio;
-        $this->cLic= new ControladorLicencia;
-        $this->cCat= new ControladorCategoria;
-        $this->cClub= new ControladorClub;
+        $this->cDom= ServidorControladores::getConDomicilio();
+        $this->cLic= ServidorControladores::getConLicencia();
+        $this->cCat= ServidorControladores::getConCategoria();
+        $this->cClub= ServidorControladores::getConClub();
     }
     
     public function insertarPatinador($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta,
             $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $idCatEsc, $idCatLibr, $idCatDza){
         try{
-            static::$bd->getConexion()->query("START TRANSACTION");
+            ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION");
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
-            if(!static::$bd->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
+            if(!ServidorControladores::getConBD()->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
                 $fNacimiento','$sexo','$nacionalidad','$exportada','$fechaAlta','$idClub','$idDomicilio',null)")){
-                die(static::$bd->getConexion()->error);
-                static::$bd->getConexion()->query("ROLLBACK");
+                die(ServidorControladores::getConBD()->getConexion()->error);
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }
-            $idP=static::$bd->getConexion()->query("SELECT MAX(idPersona) AS id FROM persona")->fetch_array();
+            $idP=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPersona) AS id FROM persona")->fetch_array();
             $idPer=$idP['id'];
             
-            if(!static::$bd->getConexion()->query("insert into patinador values(null, null,'$idCatEsc','$idCatLibr','
+            if(!ServidorControladores::getConBD()->getConexion()->query("insert into patinador values(null, null,'$idCatEsc','$idCatLibr','
                     $idCatDza','$idPer')")){
-                    die(static::$bd->getConexion()->error);
-                    static::$bd->getConexion()->query("ROLLBACK");
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                    ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }            
-            static::$bd->getConexion()->query("COMMIT");
+            ServidorControladores::getConBD()->getConexion()->query("COMMIT");
             return TRUE;
         }  catch (mysqli_sql_exception $ex){
-            static::$bd->getConexion()->query("ROLLBACK");
+            ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             echo 'Error: '. $ex->getMessage();
             return FALSE;
         }
     }
     
-    public function traerPatinadorXID(int $id){
+    public function traerPatinadorXID($id){
         try{
-            $rPat=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPatinador='$id")->fetch_array();
-            $idP=$rPat['idPersona'];
-            $rPer=  static::$bd->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP")->fetch_array();
+            $rPat=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPatinador='$id'")->fetch_array();
+            $idP=$rPat['idPer'];
+            $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'")->fetch_array();
             
             $pat= $this->armarPatinador($rPer, $rPat);
             return $pat;
@@ -66,9 +65,9 @@ class ControladorPatinador extends ControladorGeneral{
     
     public function traerUnPatinadorXAtributo(String $atributo, $valorAtributo){
         try{
-            $rPer=  static::$bd->getConexion()->query("SELECT * FROM persona WHERE '$atributo'='$valorAtributo")->fetch_array();
+            $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE '$atributo'='$valorAtributo")->fetch_array();
             $idP=$rPer['idPersona'];
-            $rPat=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP")->fetch_array();
+            $rPat=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP")->fetch_array();
             return $this->armarPatinador($rPer, $rPat);
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
@@ -98,24 +97,24 @@ class ControladorPatinador extends ControladorGeneral{
         $patinadores_array= array();
         try{
             if ($idClub!=0) {
-                 $r1= static::$bd->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub");
+                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub'");
                  
                  while ($f=$r1->fetch_array()) {
                     $idP=$f['idPersona'];
-                    $r2=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP");
+                    $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPer='$idP'");
                     if ($f2=$r2->fetch_array()) {
                         array_push($patinadores_array, $this->armarPatinador($f, $f2));
                     }
                  }
             }else {
-                $r1= static::$bd->getConexion()->query("SELECT * FROM persona");
+                $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona");
                 while ($f=$r1->fetch_array()) {
                      array_push($datos_persona, $f);                
                 }    
                 $r1->free();
                 foreach ($datos_persona as $fila) {
                     $idP=$fila['idPersona'];
-                    $r2= static::$bd->getConexion()->query("select * from patinador where idPer=".$idP);
+                    $r2= ServidorControladores::getConBD()->getConexion()->query("select * from patinador where idPer=".$idP);
                     while ($f2= $r2->fetch_array()) {
                        array_push($patinadores_array, $this->armarPatinador($fila, $f2));
                     }
@@ -149,13 +148,14 @@ class ControladorPatinador extends ControladorGeneral{
         return $patinadores_array;
     }
     
-    public function creaOHabilitaLicencia ($idPat, $tipo){
-        $pat= $this->traerPatinadorXID($idPat);
+    public function creaOHabilitaLicencia ($pat, $tipo){
         if ($pat->getLicencia()== null) {
-            $this->cLic->nuevaLicencia($tipo, $activa);
+            $this->cLic->nuevaLicencia($tipo, 'true');
             $idLic= $this->cLic->traerUltimoId();
             $idP= $pat->getIdPersona();
-            static::$bd->getConexion->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP'")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
             return true;
         }elseif($pat->getLicencia()->getActiva()==false){
             $this->cLic->habilitaODeshabilita($pat->getLicencia());

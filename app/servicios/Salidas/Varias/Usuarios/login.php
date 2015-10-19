@@ -6,9 +6,9 @@
  */
 session_start();
 //error_reporting(0);
-require_once '..\..\..\Controlador\ControladorUsuario.php';
+require_once '..\..\..\Controlador\ServidorControladores.php';
 
-$contrUser= new ControladorUsuario();
+$contrUser= ServidorControladores::getConUsuario();
 $us=null;
 
 if ($_POST['user'] && $_POST['pass']) {
