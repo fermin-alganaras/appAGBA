@@ -8,7 +8,7 @@ class Club {
     public $domicilio;
     public $presidente;
     public $secretario;
-    public $usuario;
+    
     
     function __construct($nombre, $presidente, $secretario) {
         $this->nombre = $nombre;
@@ -49,14 +49,6 @@ class Club {
     }
 
 
-    function getUsuario() {
-        return $this->usuario;
-    }
-
-    function setUsuario($usuario) {
-        $this->usuario = $usuario;
-    }
-    
     function getDomicilio() {
         return $this->domicilio;
     }

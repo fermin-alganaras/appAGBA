@@ -4,14 +4,14 @@ require_once '..\..\..\Modelo\Categoria.php';
 class ControladorCategoria extends ControladorGeneral {
     
     function __construct() {
-        parent::__construct();
+        
         
     }
     
-    public function agregarCategoria($denominacion, $orden,  $modo){
+    public function agregarCategoria($denominacion, $orden,  $modo, $tipoLicencia){
         try{
-            static::$bd->getConexion()->query("INSERT INTO categoria VALUES('$denominacion','$orden',' 
-                    $modo')");
+            ServidorControladores::getConBD()->getConexion()->query("INSERT INTO categoria VALUES('$denominacion','$orden',' 
+                    $modo','$tipoLicencia')");
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
@@ -19,8 +19,9 @@ class ControladorCategoria extends ControladorGeneral {
     
     public function traerCategoriaXID($id){
         try{
-            $r=static::$bd->getConexion()->query("SELECT * FROM categoria WHERE idCategoria=". $id)->fetch_array();
-            $cat= new Modelo\Categoria($r['denominacion'], $r['orden'], $r['modo']);
+            $r=ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM categoria WHERE idCategoria='$id'")->fetch_array();
+            $cat= new Modelo\Categoria($r['denominacion'], $r['orden'], $r['modo'], $r['tipoLicencia']);
+            $cat->setIdCategoria($r['idCategoria']);
             return $cat;
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
@@ -28,9 +29,10 @@ class ControladorCategoria extends ControladorGeneral {
     } 
     
     public function traerUltimoId(){
-        $r=static::$bd->getConexion()->query("SELECT MAX(idCategoria) AS id FROM categoria" )->fetch_array();
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idCategoria) AS id FROM categoria" )->fetch_array();
         return $r['id'];    
     }
+    
     
     public function cambiaOrden($aPartirDe){
         try{

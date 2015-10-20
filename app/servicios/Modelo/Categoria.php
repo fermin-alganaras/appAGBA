@@ -7,12 +7,14 @@ class Categoria {
     public $orden;
     public $modo;
     public $ascensos;
+    public $tipoLicencia;
     
-    function __construct($denominacion, $orden, $modo) {
+    function __construct($denominacion, $orden, $modo, $tipoLicencia) {
         $this->denominacion = $denominacion;
         $this->orden = $orden;
         $this->modo = $modo;
         $this->ascensos= array();
+        $this->tipoLicencia= $tipoLicencia;
     }
     
     function getIdCategoria() {
@@ -54,6 +56,16 @@ class Categoria {
     function setAscensos($ascensos) {
         $this->ascensos = $ascensos;
     }
+    
+    function getTipoLicencia() {
+        return $this->tipoLicencia;
+    }
+
+    function setTipoLicencia($tipoLicencia) {
+        $this->tipoLicencia = $tipoLicencia;
+    }
+
+
 
 
 

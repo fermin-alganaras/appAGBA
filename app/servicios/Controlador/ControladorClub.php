@@ -3,12 +3,11 @@ require_once ('ControladorGeneral.php');
 require_once ('ControladorDomicilio.php');
 require_once '..\..\..\Modelo\Club.php';
 
-class ControladorClub extends ControladorGeneral{
+class ControladorClub {
 
     private $cDom;
     function __construct() {
-        parent::__construct();
-        $this->cDom= new ControladorDomicilio();
+        $this->cDom= ServidorControladores::getConDomicilio();
     }
 
     public function agregarClub($nombre, $presidente, $secretario, $idUsuario, $direccion,
@@ -16,7 +15,7 @@ class ControladorClub extends ControladorGeneral{
         try{
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
-            static::$bd->getConexion()->query("INSERT INTO club VALUES(default,'$nombre
+            ServidorControladores::getConBD()->getConexion()->query("INSERT INTO club VALUES(default,'$nombre
                     ','$presidente','$secretario','$idUsuario','$idDomicilio ')");
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
@@ -25,13 +24,15 @@ class ControladorClub extends ControladorGeneral{
 
     public function traerClubXID($id){
         try {
-            $r= static::$bd->getConexion()->query("SELECT * FROM club WHERE idClub=".$id)->fetch_array();
+            $r= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM club WHERE idClub='$id'")->fetch_array();
             $club= new Modelo\Club($r['nombre'], $r['presidente'], $r['secretario']);
             $club->setIdClub($r['idClub']);
             $club->setDomicilio($this->cDom->traerDomicilioXID($r['idDomicilio']));
+            return $club;
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
+        
     }
 
 }
