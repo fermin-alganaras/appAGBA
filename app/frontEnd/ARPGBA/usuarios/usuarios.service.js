@@ -22,14 +22,20 @@
         data: data
       }
       $http(config).then(function (result){
-        service.usuario = result.data.user;
-        $state.go('ARPGBA')
+        service.usuario = result.data;
+        if (service.usuario.tipo === 'admin') {
+          $state.go('ARPGBA')
+        }else if (service.usuario.tipo === 'club') {
+          $state.go('login')
+        }else {
+          $state.go('login')
+        }
       })
     }
 
 
     function getUsuario() {
-      return $http.get(CONSTANTS.SERVER_URL + "ARPGBA.json");
+      return service.usuario;
     }
     return service
 

@@ -14,7 +14,7 @@
       }
       $stateProvider
         .state('ARPGBA.club', {
-          url: 'clubes',
+          url: '/clubes',
           views: {
             'content@': {
               templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubes.tmpl.html',

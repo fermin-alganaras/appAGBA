@@ -9,7 +9,8 @@
 
     function patinadores($http, CONSTANTS) {
         var service = {
-            getPatinadores: getPatinadores
+            getPatinadores: getPatinadores,
+            patinadores:{}
         };
 
         var config = {
@@ -18,7 +19,9 @@
           data: {idClub: '0'}
         }
         function getPatinadores() {
-          return $http(config);
+          return $http(config).then(function(result){
+            service.patinadores = result.data;
+          })
         }
         return service;
     }
