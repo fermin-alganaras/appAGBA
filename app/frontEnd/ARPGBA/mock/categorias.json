@@ -1,0 +1,19 @@
+{
+  "categorias": [
+    {
+      "A1Masculino":{
+        "id": 1,
+        "Denominacion": "A1Masculino",
+        "Modo": 1,
+        "Ascensos": {"text": "hola"}
+      },
+
+      "A1Femenino":{
+        "id": 2,
+        "Denominacion": "A1Femenino",
+        "Modo": 0,
+        "Ascensos": {"text": "chau"}
+      }
+    }
+  ]
+}
