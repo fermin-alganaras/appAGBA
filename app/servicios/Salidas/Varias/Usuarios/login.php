@@ -11,9 +11,12 @@ require_once '..\..\..\Controlador\ServidorControladores.php';
 $contrUser= ServidorControladores::getConUsuario();
 $us=null;
 
-if ($_POST['user'] && $_POST['pass']) {
-    $us= $contrUser->traerUsuario($_POST['user'], $_POST['pass']);
-    $us->setPass('');
+if ($_POST['usuario']) {
+    $datos= json_decode($_POST['usuario']);
+    foreach($datos as $u){
+        $us= $contrUser->traerUsuario($u->user, $u->pass);
+        $us->setPass('');
+    }
     if ($us!=NULL) {
         $_SESSION['user']= serialize($us);
     }
