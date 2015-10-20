@@ -6,15 +6,15 @@ class Ascenso {
     public $totalPat;
     public $maxRango;
     public $repitencia;
-    
-    
-    
+
+
+
     function __construct($totalPat, $maxRango, $repitencia) {
         $this->totalPat = $totalPat;
         $this->maxRango = $maxRango;
         $this->repitencia = $repitencia;
     }
-    
+
     function getIdAscenso() {
         return $this->idAscenso;
     }

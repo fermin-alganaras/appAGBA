@@ -19,7 +19,7 @@
 
       $stateProvider
         .state('ARPGBA.padron', {
-          url: 'padron',
+          url: '/padron',
           views: {
             'content@': {
               templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/padron/padron-tmpl.html',

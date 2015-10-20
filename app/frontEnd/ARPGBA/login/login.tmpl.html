@@ -13,13 +13,13 @@
       <form>
         <div class="form-group">
           <label for="exampleInputEmail1">Usuario</label>
-          <input class="form-control" placeholder="Usuario">
+          <input class="form-control" ng-model="loginController.usuario.user" placeholder="Usuario">
         </div>
         <div class="form-group">
           <label>Contraseña</label>
-          <input class="form-control" placeholder="Contraseña" type="password">
+          <input class="form-control" ng-model="loginController.usuario.pass" placeholder="Contraseña" type="password">
         </div>
-        <button class="btn btn-default" type="submit">Ingresar</button>
+        <button class="btn btn-default" type="button" ng-click="loginController.iniciarSesion()">Ingresar</button>
       </form>
     </div>
   </div>

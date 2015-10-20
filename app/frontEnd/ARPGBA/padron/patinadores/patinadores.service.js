@@ -9,12 +9,19 @@
 
     function patinadores($http, CONSTANTS) {
         var service = {
-            getPatinadores: getPatinadores
+            getPatinadores: getPatinadores,
+            patinadores:{}
         };
 
-
+        var config = {
+          method: 'POST',
+          url: 'app/servicios/Salidas/Padron/Patinador/listarPatinadores.php',
+          data: {idClub: '0'}
+        }
         function getPatinadores() {
-          return $http.get(CONSTANTS.SERVER_URL + 'patinadores.json');
+          return $http(config).then(function(result){
+            service.patinadores = result.data;
+          })
         }
         return service;
     }

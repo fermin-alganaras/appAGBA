@@ -3,7 +3,6 @@
 
   angular
     .module('ARPGBA', [
-      'permission',
       'ui.router',
       'ui.date',
       'ARPGBA.admin',
@@ -12,7 +11,9 @@
       'club',
       'torneos',
       'usuario',
-      'ui.bootstrap'
+      'categorias',
+      'ui.bootstrap',
+      'ngTagsInput'
     ])
 
   .config(function config($stateProvider, $urlRouterProvider) {
@@ -39,17 +40,12 @@
       .state('ARPGBA', {
         url: '/ARPGBA',
         resolve: {
-          permiso: function (usuarioService, $q, $state){
-            var deferred = $q.defer();
+          permiso: function (usuarioService, $state){
             var roles = roleDefinition();
-            usuarioService.getUsuario().then(function(result){
-              if(roles.admin.permiso === result.data.usuario.permiso){
-                deferred.resolve();
-              }else{
-                deferred.reject();
+            var usuario = usuarioService.getUsuario();
+              if(!(roles.admin.permiso === usuario.tipo)){
                 $state.go('login')
               }
-            })
           }
         },
         views: {
