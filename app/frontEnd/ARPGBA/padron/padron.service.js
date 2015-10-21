@@ -17,9 +17,18 @@
 
 
         function getPadron() {
-          $q.all([Tecnicos.getTecnicos(), Delegados.getDelegados(), Patinadores.getPatinadores()]).then(function(results){
+          return $q.all([Tecnicos.getTecnicos(), Delegados.getDelegados(), Patinadores.getPatinadores()]).then(function(results){
             _.forEach(results, function(result){
-              service.padron[_.keys(result.data)[0]] = result.data[_.keys(result.data)[0]];
+
+              if(_.has(result.data[0], 'idTecnico')){
+                service.padron.tecnicos = result.data;
+
+              }else if (_.has(result.data[0], 'idDelegado')) {
+                service.padron.delegados = result.data;
+              }else{
+                service.padron.patinadores = result.data;
+              }
+
             })
           });
         }
