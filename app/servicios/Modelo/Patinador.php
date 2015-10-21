@@ -11,8 +11,8 @@ class Patinador extends Persona {
     public $catDanza;
     public $ultimaComp;
     
-    function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta, $ultimaComp) {
-        parent::__construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta);
+    function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $idClub,$fechaAlta, $ultimaComp) {
+        parent::__construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta, $idClub);
         $this->ultimaComp = $ultimaComp;
     }
     

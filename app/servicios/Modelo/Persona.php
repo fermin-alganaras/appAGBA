@@ -16,7 +16,7 @@ abstract class Persona {
     public $club;
     public $domicilio;
             
-    function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta) {
+    function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta, $idClub) {
         $this->apellido = $apellido;
         $this->nombre = $nombre;
         $this->dni = $dni;
@@ -26,6 +26,7 @@ abstract class Persona {
         $this->exportada= $exportada;
         $this->fechaAlta= $fechaAlta;
         $this->licencia=null;
+        $this->club= $idClub;
     }
     
     function getIdPersona() {

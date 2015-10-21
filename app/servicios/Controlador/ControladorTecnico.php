@@ -68,7 +68,7 @@ class ControladorTecnico {
     private function armarTecnico ($rPer, $rPat){
         try{
             $tec= new \Modelo\Tecnico($rPer['apellido'], $rPer['nombre'], $rPer['dni'], $rPer['fNacimiento'],
-                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta']);
+                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['idClub'],$rPer['fechaAlta']);
             $tec->setIdTecnico($rPat['idTecnico']);
             $tec->setIdPersona($rPat['idPersona']);
             $tec->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
