@@ -10,13 +10,14 @@ class ControladorClub {
         $this->cDom= ServidorControladores::getConDomicilio();
     }
 
-    public function agregarClub($nombre, $presidente, $secretario, $idUsuario, $direccion,
+    public function agregarClub($nombre, $presidente, $secretario, $direccion,
             $cp, $telefono, $localidad, $provincia){
         try{
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
-            ServidorControladores::getConBD()->getConexion()->query("INSERT INTO club VALUES(default,'$nombre
-                    ','$presidente','$secretario','$idUsuario','$idDomicilio ')");
+            $b=ServidorControladores::getConBD()->getConexion()->query("INSERT INTO club VALUES(default,'$nombre
+                    ','$presidente','$secretario','$idDomicilio')");
+            return $b;
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
@@ -33,6 +34,22 @@ class ControladorClub {
             echo 'Error: '. $ex->getMessage();
         }
         
+    }
+    
+    public function listarClubes(){
+        $clubes= array();
+        try {
+            $r=  ServidorControladores::getConBD()->getConexion()->query('SELECT * FROM club');
+            while ($f=$r->fetch_array()){
+                $c=new Modelo\Club($f['nombre'], $f['presidente'], $f['secretario']);
+                $c->setIdClub($f['idClub']);
+                $c->setDomicilio(ServidorControladores::getConDomicilio()->traerDomicilioXID($f['idDomicilio']));
+                array_push($clubes, $c);
+            }
+            return $clubes;
+        } catch (Exception $ex) {
+            
+        }
     }
 
 }
