@@ -15,10 +15,16 @@
     };
 
     function getClubes() {
-      $http.get(CONSTANTS.SERVER_URL + 'clubes.json').then(function(result) {
-        service.clubes =
-          result.data.clubes;
+      var config = {
+        url: 'app/servicios/Salidas/Varias/Clubes/listarClubes.php',
+        method: 'POST',
+
+      }
+
+      return $http(config).then(function(result){
+        service.clubes = result.data;
       });
+
     }
 
     return service;

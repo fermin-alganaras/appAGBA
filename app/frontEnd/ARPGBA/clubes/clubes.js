@@ -42,7 +42,7 @@
               controller: 'clubesController as clubesController',
               resolve: {
                 clubes: function(clubService) {
-                  return clubService.getClubes()
+                  return clubPadronService.getClubes()
                 }
               }
             }

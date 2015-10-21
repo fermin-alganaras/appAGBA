@@ -5,12 +5,13 @@
     .module('club')
     .factory('clubPadronService', clubPadronService);
 
-  clubPadronService.$inject = ['$http', 'CONSTANTS'];
+  clubPadronService.$inject = ['$http', 'Padron'];
 
-  function clubPadronService($http, CONSTANTS) {
+  function clubPadronService($http, Padron) {
     var service = {
       getClubPadron: getClubPadron,
-      clubPadron: {},
+      clubesPadron: {},
+      padron: {},
       selected: {},
       setSelected: setSelected,
       isSelected: isSelected,
@@ -21,21 +22,43 @@
       service.selected = club;
     }
 
-    function getSelected(){
+    function getSelected() {
       return service.selected;
     }
 
     function isSelected() {
-       if(_.isEmpty(service.selected)){
+      if (_.isEmpty(service.selected)) {
         return false
-      }else{
+      } else {
         return true
       };
     }
 
     function getClubPadron() {
-      $http.get(CONSTANTS.SERVER_URL + 'padronClub.json').then(function (result){
-        service.clubPadron = result.data.padronClubes;
+      var config = {
+        url: 'app/servicios/Salidas/Varias/Clubes/listarClubes.php',
+        method: 'POST',
+
+      }
+
+      return $http(config).then(function(result) {
+        service.clubesPadron = result.data;
+
+        Padron.getPadron().then(function(padron) {
+          service.padron = padron;
+
+          _.forEach(service.clubesPadron, function(club) {
+            _.mapKeys(service.padron, function(key) {
+              _.forEach(key, function(persona) {
+                if (club.idClub === persona.club.id) {
+                  service.clubesPadron.club.key = service.padron.persona;
+                }
+              })
+            })
+          })
+
+        })
+
       });
     }
 
