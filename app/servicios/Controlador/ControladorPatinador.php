@@ -77,7 +77,7 @@ class ControladorPatinador {
     private function armarPatinador ($rPer, $rPat){
         try{
             $pat= new \Modelo\Patinador($rPer['apellido'], $rPer['nombre'], $rPer['dni'], $rPer['fNacimiento'],
-                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta'], $rPat['ultimaComp']);
+                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['idClub'],$rPer['fechaAlta'], $rPat['ultimaComp']);
             $pat->setIdPatinador($rPat['idPatinador']);
             $pat->setIdPersona($rPat['idPer']);
             $pat->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
@@ -85,7 +85,6 @@ class ControladorPatinador {
             $pat->setCatEsc($this->cCat->traerCategoriaXID($rPat['idCatEsc']));
             $pat->setCatLibre($this->cCat->traerCategoriaXID($rPat['idCatLibre']));
             $pat->setCatDanza($this->cCat->traerCategoriaXID($rPat['idCatDanza']));
-            $pat->setClub($this->cClub->traerClubXID($rPer['idClub']));
             return $pat;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();

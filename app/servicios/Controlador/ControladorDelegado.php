@@ -69,7 +69,7 @@ class ControladorDelegado extends ControladorGeneral{
     private function armarDelegado ($rPer, $rPat){
         try{
             $del= new \Modelo\Delegado($rPer['apellido'], $rPer['nombre'], $rPer['dni'], $rPer['fNacimiento'],
-                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta'], $rPat['email']);
+                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta'],$rPer['idClub'] ,$rPat['email']);
             $del->setIdDelegado($rPat['idDelegado']);
             $del->setIdPersona($rPat['idPersona']);
             $del->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
