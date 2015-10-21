@@ -12,12 +12,12 @@ if ($user) {
   //var_dump($_SESSION['user']);
     if ($user->getTipo()=='club') {
         if ($user->getClub()->getIdClub()== $_POST['idClub']) {
-            $array_del= $cDel->listarTodosXClub($_POST['idClub']);
+            $array_del= $cDel->listarDelegados($_POST['idClub']);
         }else{
             return null;
         }
     }elseif ($user->getTipo()=='admin'){
-        $array_del= $cDel->listarTodosXClub($_POST['idClub']);
+        $array_del= $cDel->listarDelegados($_POST['idClub']);
     }else{
         return null;
     }
