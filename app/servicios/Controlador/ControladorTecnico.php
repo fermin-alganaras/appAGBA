@@ -97,7 +97,7 @@ class ControladorTecnico {
                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona");
                  while ($f=$r1->fetch_array()) {
                      $idP=$f['idPersona'];
-                     $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM tecnico WHERE idPersona='$idP");
+                     $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM tecnico WHERE idPersona='$idP'");
                      while ($f2=$r2->fetch_array()) {
                         array_push($tecnicos_array, $this->armarTecnico($f, $f2));
                     }
