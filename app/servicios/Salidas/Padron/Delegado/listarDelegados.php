@@ -6,7 +6,7 @@ require_once ('..\..\..\Controlador\ServidorControladores.php');
 require_once ('..\..\..\Modelo\Usuario.php');
 
 $cPat= ServidorControladores::getConPatinador();
-$array_pat=null;    
+$array_pat=null;
 $user=  unserialize($_SESSION['user']);
 if ($user) {
   //var_dump($_SESSION['user']);

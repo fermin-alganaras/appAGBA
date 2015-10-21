@@ -1,28 +1,31 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('patinadores')
-        .factory('Patinadores', patinadores);
+  angular
+    .module('patinadores')
+    .factory('Patinadores', patinadores);
 
-    patinadores.$inject = ['$http', 'CONSTANTS'];
+  patinadores.$inject = ['$http'];
 
-    function patinadores($http, CONSTANTS) {
-        var service = {
-            getPatinadores: getPatinadores,
-            patinadores:{}
-        };
+  function patinadores($http) {
+    var service = {
+      getPatinadores: getPatinadores,
+      patinadores: {}
+    };
 
-        var config = {
-          method: 'POST',
-          url: 'app/servicios/Salidas/Padron/Patinador/listarPatinadores.php',
-          data: {idClub: '0'}
+
+    function getPatinadores() {
+      var config = {
+        url: 'app/servicios/Salidas/Padron/Patinador/listarPatinadores.php',
+        method: 'POST',
+        data: "idClub=" + 0,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
-        function getPatinadores() {
-          return $http(config).then(function(result){
-            service.patinadores = result.data;
-          })
-        }
-        return service;
+      }
+
+      return $http(config);
     }
+    return service;
+  }
 })();
