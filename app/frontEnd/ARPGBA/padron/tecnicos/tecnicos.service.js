@@ -5,17 +5,26 @@
         .module('tecnicos')
         .factory('Tecnicos', tecnicos);
 
-    tecnicos.$inject = ['$http', 'CONSTANTS'];
+    tecnicos.$inject = ['$http'];
 
-    function tecnicos($http, CONSTANTS) {
+    function tecnicos($http) {
         var service = {
-            getTecnicos: getTecnicos
+            getTecnicos: getTecnicos,
+            tecnicos: {}
         };
 
-
         function getTecnicos() {
-          return $http.get(CONSTANTS.SERVER_URL + 'tecnicos.json')
-        }
+          var config = {
+            url:  'app/servicios/Salidas/Padron/Tecnico/listarTecnicos.php',
+            method: 'POST',
+            data: "idClub=" + 0,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }
+
+          return $http(config);
+      }
         return service;
     }
 })();

@@ -1,22 +1,31 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('delegados')
-        .factory('Delegados', delegados);
+  angular
+    .module('delegados')
+    .factory('Delegados', delegados);
 
-        delegados.$inject = ['$http', 'CONSTANTS'];
+  delegados.$inject = ['$http'];
 
-    function delegados($http, CONSTANTS) {
-        var service = {
-            getDelegados: getDelegados
-        };
+  function delegados($http) {
+    var service = {
+      getDelegados: getDelegados,
+      delegados: {}
+    };
 
-
-        function getDelegados() {
-          return $http.get(CONSTANTS.SERVER_URL + 'delegados.json')
-
-        }
-        return service;
+    var config = {
+      url: 'app/servicios/Salidas/Padron/Delegado/listarDelegados.php',
+      method: 'POST',
+      data: "idClub=" + 0,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     }
+
+    function getDelegados() {
+      return $http(config);
+
+    }
+    return service;
+  }
 })();

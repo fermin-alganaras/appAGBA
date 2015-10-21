@@ -15,11 +15,12 @@
     };
 
     function iniciarSesion(usuario) {
-      var data = {'usuario':usuario};
+      var data = JSON.stringify(usuario);
       var config = {
         method: 'POST',
-        url: 'app/servicios/Salidas/varias/Usuarios/login.php',
-        data: data
+        url: 'app/servicios/Salidas/Varias/Usuarios/login.php',
+        data: 'usuario=' + data,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }
       $http(config).then(function (result){
         service.usuario = result.data;
