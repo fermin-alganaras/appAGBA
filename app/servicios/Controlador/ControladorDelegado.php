@@ -98,7 +98,6 @@ class ControladorDelegado extends ControladorGeneral{
                      $idP= $f['idPersona'];
                      $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM delegado WHERE idPersona='$idP'");
                      while ($f2=$r2->fetch_array()) {
-                        $f2=$r2->fetch_array();
                         array_push($delegado_array, $this->armarDelegado($f, $f2));
                     }
                  }
