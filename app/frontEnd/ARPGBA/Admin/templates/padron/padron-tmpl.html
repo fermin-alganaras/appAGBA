@@ -21,8 +21,8 @@
     <td>{{persona.nombre}}</td>
     <td>{{persona.apellido}}</td>
     <td>{{persona.sexo}}</td>
-    <td>{{persona.club}}</td>
-    <td ng-class="{danger: persona.licencia == false, 'success': persona.licencia == true}">{{persona.licencia}}</td>
+    <td>{{persona.club.nombre}}</td>
+    <td ng-class="{danger: persona.licencia.activa == false, 'success': persona.licencia.activa == true}">{{persona.licencia.activa}}</td>
   </tr>
 </table>
  <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></pagination>

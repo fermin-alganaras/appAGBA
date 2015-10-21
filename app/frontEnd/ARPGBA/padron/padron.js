@@ -38,7 +38,7 @@
                   })
                 },
                 padron: function(Padron) {
-                  return Padron.getPadron()
+                  return Padron.getPadron();
                 }
               }
             },
