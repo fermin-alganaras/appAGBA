@@ -32,7 +32,7 @@
                     }
                   })
                 },
-                clubPadron: function(clubPadronService) {
+                clubesPadron: function(clubPadronService) {
                   return clubPadronService.getClubPadron();
                 }
               }
@@ -41,8 +41,8 @@
               templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/sideBar.clubes.html',
               controller: 'clubesController as clubesController',
               resolve: {
-                clubes: function(clubService) {
-                  return clubPadronService.getClubes()
+                clubesPadron: function(clubPadronService) {
+                  return clubPadronService.getClubPadron();
                 }
               }
             }
@@ -54,11 +54,6 @@
                 'content@': {
                   templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubInfoPatinadores.tmpl.html',
                   controller: 'clubesInfoController as clubInfo',
-                  resolve: {
-                    clubPadron: function(clubPadronService) {
-                      return clubPadronService.getClubPadron();
-                    }
-                  }
                 }
               }
             })
@@ -68,11 +63,6 @@
                 'content@': {
                   templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubInfoDelegados.tmpl.html',
                   controller: 'clubesInfoController as clubInfo',
-                  resolve: {
-                    clubPadron: function(clubPadronService) {
-                      return clubPadronService.getClubPadron();
-                    }
-                  }
                 }
               }
             })
@@ -82,11 +72,6 @@
                 'content@': {
                   templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubInfoTecnicos.tmpl.html',
                   controller: 'clubesInfoController as clubInfo',
-                  resolve: {
-                    clubPadron: function(clubPadronService) {
-                      return clubPadronService.getClubPadron();
-                    }
-                  }
                 }
               }
             })

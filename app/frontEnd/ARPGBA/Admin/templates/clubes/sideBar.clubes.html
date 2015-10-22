@@ -6,7 +6,7 @@
   <hr>
   <ul class="nav nav-pills nav-stacked" ng-repeat="club in clubesController.clubesPadron">
     <li>
-      <a ng-click="clubesController.selectClub(club)" ui-sref="ARPGBA.club.patinadores({selectedClub:club.club.nombre})">{{club.club.nombre}}</a>
+      <a ng-click="clubesController.selectClub(club)" ui-sref="ARPGBA.club.patinadores({selectedClub:club.nombre})">{{club.nombre}}</a>
     </li>
   </ul>
 </div>
