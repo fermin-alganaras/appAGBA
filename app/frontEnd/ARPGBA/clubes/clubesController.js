@@ -5,21 +5,20 @@
     .module('club')
     .controller('clubesController', clubesController);
 
-  clubesController.$inject = ['clubService', 'clubPadronService', '$scope', '$stateParams'];
+  clubesController.$inject = ['clubPadronService', '$scope', '$stateParams'];
 
-  function clubesController(clubService, clubPadronService, $scope, $stateParams) {
+  function clubesController(clubPadronService, $scope, $stateParams) {
     var clubesController = this;
 
+    console.log("inicio el controller");
 
-
-    clubesController.clubesPadron = clubPadronService.clubPadron;
+    clubesController.clubesPadron = clubPadronService.clubesPadron;
     clubesController.isSelected = clubPadronService.isSelected;
     clubesController.selectClub = selectClub;
-      $scope.selectedClub = $stateParams.selectedClub;
+    $scope.selectedClub = $stateParams.selectedClub;
 
     function selectClub(club) {
       clubPadronService.setSelected(club);
     }
-
   }
 })();
