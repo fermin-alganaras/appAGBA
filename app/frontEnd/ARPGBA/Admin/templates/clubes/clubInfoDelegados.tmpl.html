@@ -16,7 +16,7 @@
   <tr ng-repeat="delegado in clubInfo.club.delegados | filter:filtro">
     <td>{{delegado.nombre}}</td>
     <td>{{delegado.apellido}}</td>
-    <td>{{delegado.licencia}}</td>
+    <td>{{delegado.licencia.activa}}</td>
     <td><a ng-click="clubInfo.open(delegado)"><span class="glyphicon glyphicon-pencil"></span></a></td>
   </tr>
 </table>

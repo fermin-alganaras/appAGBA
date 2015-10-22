@@ -42,13 +42,11 @@
         method: 'POST'
 
       }
-      console.log('asd')
       $http(config).then(function(result) {
         service.clubesPadron = result.data;
 
         Padron.getPadron().then(function(padron) {
           service.padron = padron;
-          console.log("hago esto");
           _.each(service.clubesPadron, function(club) {
             _.each(service.padron, function(array, key) {
               club[key] = _.filter(array, {

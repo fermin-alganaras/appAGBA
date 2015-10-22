@@ -16,7 +16,7 @@
   <tr ng-repeat="tecnico in clubInfo.club.tecnicos | filter:filtro">
     <td>{{tecnico.nombre}}</td>
     <td>{{tecnico.apellido}}</td>
-    <td>{{tecnico.licencia}}</td>
+    <td>{{tecnico.licencia.activa}}</td>
     <td><a ng-click="clubInfo.open(tecnico)"><span class="glyphicon glyphicon-pencil"></span></a></td>
   </tr>
 </table>

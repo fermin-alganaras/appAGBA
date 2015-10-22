@@ -49,7 +49,7 @@
           }
         })
             .state('ARPGBA.club.patinadores', {
-              url: 'clubes/info/patinadores/:selectedClub',
+              url: '/info/patinadores/:selectedClub',
               views: {
                 'content@': {
                   templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubInfoPatinadores.tmpl.html',
@@ -58,7 +58,7 @@
               }
             })
             .state('ARPGBA.club.delegados', {
-              url: 'clubes/info/delegados/:selectedClub',
+              url: '/info/delegados/:selectedClub',
               views: {
                 'content@': {
                   templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubInfoDelegados.tmpl.html',
@@ -67,7 +67,7 @@
               }
             })
             .state('ARPGBA.club.tecnicos', {
-              url: 'clubes/info/tecnicos/:selectedClub',
+              url: '/info/tecnicos/:selectedClub',
               views: {
                 'content@': {
                   templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/clubes/clubInfoTecnicos.tmpl.html',

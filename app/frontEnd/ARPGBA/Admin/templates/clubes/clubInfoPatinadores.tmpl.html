@@ -16,7 +16,7 @@
   <tr ng-repeat="patinador in clubInfo.club.patinadores | filter:filtro">
     <td>{{patinador.nombre}}</td>
     <td>{{patinador.apellido}}</td>
-    <td>{{patinador.licencia}}</td>
+    <td>{{patinador.licencia.activa}}</td>
     <td><a ng-click="clubInfo.open(patinador)"><span class="glyphicon glyphicon-pencil"></span></a></td>
   </tr>
 </table>

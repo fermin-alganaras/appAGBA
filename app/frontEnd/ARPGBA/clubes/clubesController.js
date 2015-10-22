@@ -10,7 +10,6 @@
   function clubesController(clubPadronService, $scope, $stateParams) {
     var clubesController = this;
 
-    console.log("inicio el controller");
 
     clubesController.clubesPadron = clubPadronService.clubesPadron;
     clubesController.isSelected = clubPadronService.isSelected;
