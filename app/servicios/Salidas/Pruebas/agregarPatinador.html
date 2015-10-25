@@ -1,0 +1,42 @@
+
+<html>
+    <head>
+        <title>Agregar</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <body>
+        <form action="../Padron/Patinador/agregarPatinador.php" method="POST">
+            <label>Apellido:</label><br/>
+            <input type="text" name="apellido" size="20"/><br/>
+            <label>Nombre:</label><br/>
+            <input type="text" name="nombre" size="20"/><br/>
+            <label>DNI:</label><br/>
+            <input type="text" name="dni" size="20"/><br/>
+            <label>Fecha de Nacimiento:</label><br/>
+            <input type="text" name="fNacimiento" size="20"/><br/>
+            <label>Sexo:</label><br/>
+            <label>Femenino</label>
+            <input type="radio" name="sexo" value="F"/><br/>
+            <label>Masculino:</label>
+            <input type="radio" name="sexo" value="M"/><br/>
+            <label>Nacionalidad:</label><br/>
+            <input type="text" name="nacionalidad" size="20"/><br/>
+            <label>Direccion:</label><br/>
+            <input type="text" name="direccion" size="20"/><br/>
+            <label>Codigo Postal (CP):</label><br/>
+            <input type="text" name="cp" size="20"/><br/>
+            <label>Localidad:</label><br/>
+            <input type="text" name="localidad" size="20"/><br/>
+            <label>Provincia:</label><br/>
+            <input type="text" name="provincia" size="20"/><br/>
+            <label>Telefono:</label><br/>
+            <input type="text" name="telefono" size="20"/><br/>
+            <input type="hidden" name="esc" value="1"/>
+            <input type="hidden" name="libr" value="1"/>
+            <input type="hidden" name="dza" value="1"/>
+            <input type="submit" name="boton" value="Agregar"/>
+        </form>
+    </body>
+</html>

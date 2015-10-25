@@ -9,8 +9,8 @@ class ControladorDomicilio {
     }
     
     public function insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia){
-        if (!ServidorControladores::getConBD()->getConexion()->query("insert into domicilio values(null,'$direccion','
-                $cp','$telefono','$localidad',' $provincia')")){
+        if (!ServidorControladores::getConBD()->getConexion()->query("insert into domicilio values(null,'$direccion','$cp"
+                . "','$telefono','$localidad',' $provincia')")){
             die ("Error en la query de Controlador Domicilio");
         }
     }

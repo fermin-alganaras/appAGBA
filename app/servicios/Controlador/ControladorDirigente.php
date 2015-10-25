@@ -1,59 +1,56 @@
 <?php
 
 require_once ('..\..\..\Modelo\Dirigente.php');
-require_once ('ControladorGeneral.php');
+require_once ('ServidorControladores.php');
 require_once ('ControladorDomicilio.php');
 require_once ('ControladorLicencia.php');
 require_once ('ControladorCategoria.php');
 require_once ('ControladorClub.php');
 
-class ControladorDirigente extends \Modelo\Persona{
+class ControladorDirigente {
     private $cDom;
     private $cLic;
     private $cClub;
     function __construct() {
-        parent::__construct();
-        $this->cDom= new ControladorDomicilio;
-        $this->cLic= new ControladorLicencia;
-        $this->cClub= new ControladorClub;
+        $this->cDom= ServidorControladores::getConDomicilio();
+        $this->cLic= ServidorControladores::getConLicencia();
+        $this->cClub= ServidorControladores::getConClub();
     }
     
     public function insertarDirigente($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta,
-            $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $cargo){
+            $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $cargo, $email){
         try{
-            if(static::$bd->getConexion()->query("START TRANSACTION")){
-                echo 'Se inicio transaccion \n';
-            }else {
-                echo 'No se inicio transaccion';
+            if(!ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
             }
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
-            if(!static::$bd->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
+            if(!ServidorControladores::getConBD()->getConexion()->query("insert into persona values(null,'$apellido','$nombre','$dni','
                 $fNacimiento','$sexo','$nacionalidad','$exportada','$fechaAlta','$idClub','$idDomicilio',null)")){
-                die(static::$bd->getConexion()->error);
-                static::$bd->getConexion()->query("ROLLBACK");
+                die(ServidorControladores::getConBD()->getConexion()->error);
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }
-            $idP=static::$bd->getConexion()->query("SELECT MAX(idPersona) AS id FROM persona")->fetch_array();
+            $idP=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPersona) AS id FROM persona")->fetch_array();
             $idPer=$idP['id'];
             
-            if(!static::$bd->getConexion()->query("insert into dirigente values(null,'$cargo','$idPer')")){
-                    die(static::$bd->getConexion()->error);
-                    static::$bd->getConexion()->query("ROLLBACK");
+            if(!ServidorControladores::getConBD()->getConexion()->query("insert into dirigente values(null,'$cargo','$email','$idPer')")){
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                    ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }            
-            static::$bd->getConexion()->query("COMMIT");
+            ServidorControladores::getConBD()->getConexion()->query("COMMIT");
             return TRUE;
         }  catch (mysqli_sql_exception $ex){
-            static::$bd->getConexion()->query("ROLLBACK");
+            ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             echo 'Error: '. $ex->getMessage();
             return FALSE;
         }
     }
     
-    public function traerDirigenteXID(int $id){
+    public function traerDirigenteXID($id){
         try{
-            $rDir=  static::$bd->getConexion()->query("SELECT * FROM dirigente WHERE idDirigente='$id")->fetch_array();
+            $rDir=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM dirigente WHERE idDirigente='$id'")->fetch_array();
             $idP=$rDir['idPersona'];
-            $rPer=  static::$bd->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP")->fetch_array();
+            $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'")->fetch_array();
             
             $dir= $this->armarDelegado($rPer, $rDir);
             return $dir;
@@ -63,68 +60,58 @@ class ControladorDirigente extends \Modelo\Persona{
         }
     }
     
-    private function dirigente ($rPer, $rPat){
+    private function armarDirigente ($rPer, $rPat){
         try{
-            $del= new \Modelo\Delegado($rPer['apellido'], $rPer['nombre'], $rPer['dni'], $rPer['fNacimiento'],
-                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta'], $rPat['email']);
-            $del->setIdDelegado($rPat['idDelegado']);
-            $del->setIdPersona($rPat['idPersona']);
-            $del->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
-            $del->setLicencia($this->cLic->traerLicenciaXIdPersona($del->getIdPersona()));
-            return $del;
+            $dir= new \Modelo\Dirigente($rPer['apellido'], $rPer['nombre'], $rPer['dni'], $rPer['fNacimiento'],
+                    $rPer['sexo'], $rPer['nacionalidad'], $rPer['exportada'], $rPer['fechaAlta'], $rPat['cargo'], 
+                    $rPat['email'], $rPer['idClub']);
+            $dir->setIdDirigente($rPat['idDirigente']);
+            $dir->setIdPersona($rPat['idPersona']);
+            $dir->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
+            $dir->setLicencia($this->cLic->traerLicenciaXIdPersona($dir->getIdPersona()));
+            return $dir;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();
         }
     }
     
-    public function listarDelegados($idClub){
-        $delegado_array= array();
+    public function listarDirigentes(){
+        $dirigente_array= array();
         try{
-            if ($idClub!=0) {
-                 $r1= static::$bd->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub");
-                 while ($f=$r1->fetch_array()) {
+                $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona");
+                while ($f=$r1->fetch_array()) {
                      $idP=$f['idPersona'];
-                     $r2=  static::$bd->getConexion()->query("SELECT * FROM delegado WHERE idPersona='$idP");
-                    if ($f2=$r2->fetch_array()) {
-                        array_push($delegado_array, $this->armarPatinador($f, $f2));
-                    }
-                 }
-            }else {
-                $r1= static::$bd->getConexion()->query("SELECT * FROM persona");
-                 while ($f=$r1->fetch_array()) {
-                     $idP=$f['idPersona'];
-                     $r2=  static::$bd->getConexion()->query("SELECT * FROM patinador WHERE idPersona='$idP");
-                     while ($f2=$r2->fetch_array()) {
-                        $f2=$r2->fetch_array();
-                        array_push($delegado_array, $this->armarPatinador($f, $f2));
-                    }
-                 }
-            }
+                     $r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM dirigente WHERE idPersona='$idP'");
+                   if ($f2=$r2->fetch_array()) {
+                        array_push($dirigente_array, $this->armarDirigente($f, $f2));
+                   }
+                }
+            
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
-        return $delegado_array;
+        return $dirigente_array;
     }
     
     public function listarActivosXClub($idClub){
-        $delegado_array= $this->listarDelegados($idClub);
-        foreach ($delegado_array as $p){
-            if (!($p->getLicencia()->getActiva())) {
-                unset($p);
+        $dirigentes_array= $this->listarDirigentes($idClub);
+        foreach ($dirigentes_array as $d){
+            if (!($d->getLicencia()->getActiva())) {
+                unset($d);
             }
         }
         
-        return $delegado_array;
+        return $dirigentes_array;
     }
     
      public function listarNoActivosXClub($idClub){
-        $delegado_array= $this->listarDelegados($idClub);
-        foreach ($delgado_array as $p){
-            if ($p->getLicencia()->getActiva()) {
-                unset($p);
+        $dirigentes_array= $this->listarDirigentes($idClub);
+        foreach ($dirigentes_array as $d){
+            if ($d->getLicencia()->getActiva()) {
+                unset($d);
             }
         }
         
-        return $delegado_array;
+        return $dirigentes_array;
     }
 }
