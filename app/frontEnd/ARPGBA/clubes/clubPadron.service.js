@@ -5,9 +5,9 @@
     .module('club')
     .factory('clubPadronService', clubPadronService);
 
-  clubPadronService.$inject = ['$http', 'Padron', '$q'];
+  clubPadronService.$inject = ['$http', 'Padron', '$q','clubService'];
 
-  function clubPadronService($http, Padron, $q) {
+  function clubPadronService($http, Padron, $q, clubService) {
     var service = {
       getClubPadron: getClubPadron,
       clubesPadron: {},
@@ -16,6 +16,7 @@
       setSelected: setSelected,
       isSelected: isSelected,
       getSelected: getSelected
+
     };
 
     function setSelected(club) {
@@ -37,13 +38,9 @@
     function getClubPadron() {
       var deferred = $q.defer();
 
-      var config = {
-        url: 'app/servicios/Salidas/Varias/Clubes/listarClubes.php',
-        method: 'POST'
 
-      }
-      $http(config).then(function(result) {
-        service.clubesPadron = result.data;
+      clubService.getClubes().then(function(result) {
+        service.clubesPadron = _.cloneDeep(result.data);
 
         Padron.getPadron().then(function(padron) {
           service.padron = padron;
@@ -59,6 +56,8 @@
       });
       return deferred.promise;
     }
+
+
 
     return service;
   }

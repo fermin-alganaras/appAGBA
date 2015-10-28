@@ -1,9 +1,15 @@
-<ul class="nav nav-pills">
-<li><a ui-sref="ARPGBA.club.patinadores({selectedClub:club.club.nombre})">Patinadores</a></li>
-<li class="active"><a ui-sref="ARPGBA.club.delegados({selectedClub:club.club.nombre})">Delegados</a></li>
-<li><a ui-sref="ARPGBA.club.tecnicos({selectedClub:club.club.nombre})">Tecnicos</a></li><br>
-</ul><br>
-<input class="form-control" type="text" ng-model="filtro" placeholder="Escriba por lo que se desea filtrar">
+<form action="index.html" class="form-inline" method="post">
+  <div class="form-group">
+
+    <ul class="nav nav-pills">
+      <li><a ui-sref="ARPGBA.club.patinadores({selectedClub:club.nombre})">Patinadores</a></li>
+      <li class="active"><a ui-sref="ARPGBA.club.delegados({selectedClub:club.nombre})">Delegados</a></li>
+      <li><a ui-sref="ARPGBA.club.tecnicos({selectedClub:club.nombre})">Tecnicos</a></li>
+    </ul>
+  </div>
+      <button ui-sref="ARPGBA.club.nuevoDelegado" class="btn btn-default btn-primary btn-lg pull-right" type="button">Nuevo Delegado</button>
+</form><br>
+<input class="form-control" ng-model="filtro" placeholder="Escriba por lo que se desea filtrar" type="text">
 <table class="table table-hover">
   <thead>
     <tr>
@@ -17,6 +23,10 @@
     <td>{{delegado.nombre}}</td>
     <td>{{delegado.apellido}}</td>
     <td>{{delegado.licencia.activa}}</td>
-    <td><a ng-click="clubInfo.open(delegado)"><span class="glyphicon glyphicon-pencil"></span></a></td>
+    <td>
+      <a ng-click="clubInfo.open(delegado)">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </a>
+    </td>
   </tr>
 </table>
