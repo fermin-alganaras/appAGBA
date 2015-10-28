@@ -5,13 +5,13 @@
     .module('club')
     .factory('clubService', club);
 
-  club.$inject = ['$http', 'CONSTANTS'];
+  club.$inject = ['$http', '$q'];
 
-  function club($http, CONSTANTS) {
+  function club($http, $q) {
     var service = {
       getClubes: getClubes,
       clubes: {},
-
+      getClubById: _.memoize(getClubById)
     };
 
     function getClubes() {
@@ -21,11 +21,22 @@
 
       }
 
-      return $http(config).then(function(result){
+      var deferred = $q.defer();
+
+
+      $http(config).then(function(result){
         service.clubes = result.data;
+
+        deferred.resolve(result);
       });
 
+      return deferred.promise;
     }
+
+      function getClubById(id){
+
+        return _.findWhere(service.clubes, {"idClub": id});
+      }
 
     return service;
   }

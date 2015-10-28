@@ -1,8 +1,14 @@
-<ul class="nav nav-pills">
-<li class="active"><a ui-sref="ARPGBA.club.patinadores({selectedClub:club.club.nombre})">Patinadores</a></li>
-<li><a ui-sref="ARPGBA.club.delegados({selectedClub:club.club.nombre})">Delegados</a></li>
-<li><a ui-sref="ARPGBA.club.tecnicos({selectedClub:club.club.nombre})">Tecnicos</a></li>
-</ul><br>
+<form action="index.html" class="form-inline" method="post">
+  <div class="form-group">
+
+    <ul class="nav nav-pills">
+      <li class="active"><a ui-sref="ARPGBA.club.patinadores({selectedClub:club.nombre})">Patinadores</a></li>
+      <li><a ui-sref="ARPGBA.club.delegados({selectedClub:club.nombre})">Delegados</a></li>
+      <li><a ui-sref="ARPGBA.club.tecnicos({selectedClub:club.nombre})">Tecnicos</a></li>
+    </ul>
+  </div>
+      <button ui-sref="ARPGBA.club.nuevoPatinador" class="btn btn-default btn-lg btn-primary pull-right" type="button">Nuevo Patinador</button>
+</form><br>
 <input class="form-control" type="text" ng-model="filtro" placeholder="Escriba por lo que se desea filtrar">
 <table class="table table-hover">
   <thead>

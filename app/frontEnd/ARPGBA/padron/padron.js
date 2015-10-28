@@ -37,14 +37,16 @@
                     }
                   })
                 },
-                padron: function(Padron) {
-                  return Padron.getPadron();
-                }
+                  clubesPadron: function(clubPadronService) {
+                    return clubPadronService.getClubPadron();
+                  },
+                  padron: function(Padron) {
+                    return Padron.getPadron();
+                  }
               }
             },
             'sideBar@': {
               templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/padron/sideBar.padron.html',
-              controller: 'padronController as padronController'
             }
           }
         })
@@ -54,11 +56,6 @@
             'content@': {
               templateUrl: 'app/frontEnd/ARPGBA/Admin/templates/padron/padron.licencias.tmpl.html',
               controller: 'padronController as padronController',
-              resolve: {
-                padron: function(Padron) {
-                  return Padron.getPadron()
-                }
-              }
             }
           }
         })

@@ -10,7 +10,6 @@
     function Padron($q, Patinadores, Delegados, Tecnicos) {
         var service = {
             getPadron: getPadron,
-            mergePadronData: mergePadronData,
             padron: {}
         };
 
@@ -34,9 +33,7 @@
           });
         }
 
-        function mergePadronData(){
-          return _.union(service.padron.tecnicos, service.padron.delegados, service.padron.patinadores);
-        }
+      
 
         return service;
     }

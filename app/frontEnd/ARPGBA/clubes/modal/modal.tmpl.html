@@ -5,19 +5,18 @@
 <div class="modal-body">
   <form class="form-group">
     <label for="">D.N.I</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.dni}}"></input><br>
+    <input type="text" class="form-control" value="{{modalController.persona.dni}}"></input><br>
     <label for="">Estado Licencia</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.licencia}}"></input><br>
+    <input type="text" class="form-control" value="{{modalController.persona.licencia.activa}}"></input><br>
     <label for="">Fecha de nacimiento</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.FechaNacimiento}}"></input><br>
+    <input type="text" class="form-control" value="{{modalController.persona.FechaNacimiento}}"></input><br>
     <label for="">Sexo</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.sexo}}"></input><br>
+    <input type="text" class="form-control" value="{{modalController.persona.sexo}}"></input><br>
     <label for="">Nacionalidad</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.nacionalidad}}"></input><br>
+    <input type="text" class="form-control" value="{{modalController.persona.nacionalidad}}"></input><br>
     <label for="">Domicilio</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.domicilio}}"></input><br>
+    <input type="text" class="form-control" value="{{modalController.persona.domicilio.direccion}}, {{modalController.persona.domicilio.localidad}}, {{modalController.persona.domicilio.provincia}}" ></input><br>
     <label for="">Club</label>
-    <input type="text" class="form-control" placeholder="{{modalController.persona.club}}"></input><br>
   </form>
 </div>
 <div class="modal-footer">
