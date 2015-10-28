@@ -15,7 +15,7 @@ class ControladorBaseDeDatos {
 
     private $host= "localhost";
     private $user= "root";
-    private $pass= "root";
+    private $pass= "4984313";
     private $base= "appagba";
     private $con= null;
 

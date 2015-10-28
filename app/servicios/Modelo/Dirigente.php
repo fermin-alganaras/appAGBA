@@ -4,10 +4,12 @@ namespace Modelo;
 class Dirigente extends Persona{
     public $idDirigente;
     public $cargo;
-    
-    function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad,$exportada, $fechaAlta, $cargo) {
-        parent::__construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta);
+    public $email;
+    function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad,$exportada, 
+            $fechaAlta, $cargo, $email, $idClub) {
+        parent::__construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta, $idClub);
         $this->cargo = $cargo;
+        $this->email= $email;
     }
     
     function getIdDirigente() {
