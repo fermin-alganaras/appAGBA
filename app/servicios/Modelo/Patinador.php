@@ -8,7 +8,8 @@ class Patinador extends Persona {
     public $idPatinador;
     public $catEsc;
     public $catLibre;
-    public $catDanza;
+    public $catSoloDance;
+    public $catFreeDance;
     public $ultimaComp;
     
     function __construct($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $idClub,$fechaAlta, $ultimaComp) {
@@ -28,8 +29,8 @@ class Patinador extends Persona {
         return $this->catLibre;
     }
 
-    function getCatDanza() {
-        return $this->catDanza;
+    function getCatSoloDance() {
+        return $this->catSoloDance;
     }
 
     function getUltimaComp() {
@@ -48,13 +49,24 @@ class Patinador extends Persona {
         $this->catLibre = $catLibre;
     }
 
-    function setCatDanza($catDanza) {
-        $this->catDanza = $catDanza;
+    function setCatSoloDance($catSoloDance) {
+        $this->catSoloDance = $catSoloDance;
     }
 
     function setUltimaComp($ultimaComp) {
         $this->ultimaComp = $ultimaComp;
     }
+    
+    function getCatFreeDance() {
+        return $this->catFreeDance;
+    }
+
+    function setCatFreeDance($catFreeDance) {
+        $this->catFreeDance = $catFreeDance;
+    }
+
+
+    
 
 
 

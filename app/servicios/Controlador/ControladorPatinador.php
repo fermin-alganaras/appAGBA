@@ -22,7 +22,7 @@ class ControladorPatinador {
     }
     
     public function insertarPatinador($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta,
-            $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $idCatEsc, $idCatLibr, $idCatDza){
+            $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $idCatEsc, $idCatLibr, $idSoloDance, $idCatFreeDance){
         try{
             ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION");
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
@@ -36,7 +36,7 @@ class ControladorPatinador {
             $idPer=$idP['id'];
             
             if(!ServidorControladores::getConBD()->getConexion()->query("insert into patinador values(null, null,'$idCatEsc','$idCatLibr','
-                    $idCatDza','$idPer')")){
+                    $idSoloDance','$idCatFreeDance','$idPer')")){
                     die(ServidorControladores::getConBD()->getConexion()->error);
                     ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }            
@@ -84,7 +84,8 @@ class ControladorPatinador {
             $pat->setLicencia($this->cLic->traerLicenciaXIdPersona($pat->getIdPersona()));
             $pat->setCatEsc($this->cCat->traerCategoriaXID($rPat['idCatEsc']));
             $pat->setCatLibre($this->cCat->traerCategoriaXID($rPat['idCatLibre']));
-            $pat->setCatDanza($this->cCat->traerCategoriaXID($rPat['idCatDanza']));
+            $pat->setCatSoloDance($this->cCat->traerCategoriaXID($rPat['idCatSoloDance']));
+            $pat->setCatFreeDance(($this->cCat->traerCategoriaXID($rPat['idCatFreeDance'])));
             return $pat;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();
