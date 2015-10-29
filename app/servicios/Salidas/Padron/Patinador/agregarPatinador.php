@@ -17,10 +17,10 @@ if ($user) {
                     $patinador->domicilio->telefono, $patinador->domicilio->localidad, $patinador->domicilio->provincia,
                     $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatSoloDance, $patinador->idCatFreeDance);
                 if($b==false){
-                    return false;
+                   echo json_encode($b);
                 }
         }
-        return true;
+        echo json_encode($b);
 
     }else{
         $datos=  json_decode($_POST['patinadores']);
@@ -30,11 +30,11 @@ if ($user) {
                         false, date(DATE_W3C), $patinador->idClub, $patinador->domicilio->direccion,
                         $patinador->domicilio->cp, $patinador->domicilio->telefono,
                         $patinador->domicilio->localidad, $patinador->domicilio->provincia,
-                        $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatDza);
+                        $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatSoloDance, $patinador->idCatFreeDance);
                 if($b==false){
-                    return false;
+                    echo json_encode($b);
                 }
         }
-        return true;
+        echo json_encode($b);
     }
 }
