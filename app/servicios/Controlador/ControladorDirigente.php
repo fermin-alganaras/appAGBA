@@ -69,6 +69,7 @@ class ControladorDirigente {
             $dir->setIdPersona($rPat['idPersona']);
             $dir->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
             $dir->setLicencia($this->cLic->traerLicenciaXIdPersona($dir->getIdPersona()));
+            $dir->setFNacimiento(ServidorControladores::invertirFecha($dir->getFNacimiento()));
             return $dir;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();

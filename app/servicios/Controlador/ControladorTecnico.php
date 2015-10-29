@@ -74,7 +74,7 @@ class ControladorTecnico {
             $tec->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
             $tec->setLicencia($this->cLic->traerLicenciaXIdPersona($tec->getIdPersona()));
             $tec->setCategoria($this->cCat->traerCategoriaXID($rPat['idCategoria']));
-            
+            $tec->setFNacimiento(ServidorControladores::invertirFecha($tec->getFNacimiento()));
             return $tec;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();

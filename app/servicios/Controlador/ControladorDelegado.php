@@ -74,6 +74,7 @@ class ControladorDelegado extends ControladorGeneral{
             $del->setIdPersona($rPat['idPersona']);
             $del->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
             $del->setLicencia($this->cLic->traerLicenciaXIdPersona($del->getIdPersona()));
+            $del->setFNacimiento(ServidorControladores::invertirFecha($del->getFNacimiento()));
             return $del;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();

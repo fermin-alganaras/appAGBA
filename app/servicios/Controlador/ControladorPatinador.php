@@ -86,6 +86,7 @@ class ControladorPatinador {
             $pat->setCatLibre($this->cCat->traerCategoriaXID($rPat['idCatLibre']));
             $pat->setCatSoloDance($this->cCat->traerCategoriaXID($rPat['idCatSoloDance']));
             $pat->setCatFreeDance(($this->cCat->traerCategoriaXID($rPat['idCatFreeDance'])));
+            $pat->setFNacimiento(ServidorControladores::invertirFecha($pat->getFNacimiento()));
             return $pat;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();
