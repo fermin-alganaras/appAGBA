@@ -11,25 +11,25 @@ if ($user) {
         $datos=  json_decode($_POST['patinadores']);
         foreach ($datos as $patinador) {
             $b=$cPat->insertarPatinador($patinador->apellido, $patinador->nombre, $patinador->dni,
-                    $patinador->fNacimiento, $patinador->sexo, $$patinador->nacionalidad, 
+                    $patinador->fNacimiento, $patinador->sexo, $$patinador->nacionalidad,
                     false, date(DATE_W3C), $user->getClub()->getIdClub(),
                     $patinador->domicilio->direccion, $patinador->domicilio->cp,
-                    $patinador->domicilio->telefono, $patinador->domicilio->localidad, $patinador->domicilio->provincia, 
+                    $patinador->domicilio->telefono, $patinador->domicilio->localidad, $patinador->domicilio->provincia,
                     $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatSoloDance, $patinador->idCatFreeDance);
                 if($b==false){
                     return false;
                 }
         }
         return true;
-        
+
     }else{
         $datos=  json_decode($_POST['patinadores']);
         foreach ($datos as $patinador) {
                 $b=$cPat->insertarPatinador($patinador->apellido, $patinador->nombre, $patinador->dni,
-                        $patinador->fNacimiento, $patinador->sexo, $patinador->nacionalidad, 
+                        $patinador->fNacimiento, $patinador->sexo, $patinador->nacionalidad,
                         false, date(DATE_W3C), $patinador->idClub, $patinador->domicilio->direccion,
-                        $patinador->domicilio->cp, $patinador->domicilio->telefono, 
-                        $patinador->domicilio->localidad, $patinador->domicilio->provincia, 
+                        $patinador->domicilio->cp, $patinador->domicilio->telefono,
+                        $patinador->domicilio->localidad, $patinador->domicilio->provincia,
                         $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatDza);
                 if($b==false){
                     return false;
@@ -38,7 +38,3 @@ if ($user) {
         return true;
     }
 }
-   
-
-
-  

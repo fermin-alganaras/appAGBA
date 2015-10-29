@@ -10,3 +10,12 @@
   padding-top:0%;
   padding-bottom:27%
 }
+.formularios{
+
+}
+.formularios.ng-invalid.ng-dirty {
+    border-color: #db9788;
+}
+.formularios.ng-valid{
+  border-color: #4cae4c;
+}

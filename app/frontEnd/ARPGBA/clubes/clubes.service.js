@@ -17,8 +17,7 @@
     function getClubes() {
       var config = {
         url: 'app/servicios/Salidas/Varias/Clubes/listarClubes.php',
-        method: 'POST',
-
+        method: 'POST'
       }
 
       var deferred = $q.defer();
