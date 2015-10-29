@@ -152,6 +152,15 @@ class ServidorControladores {
         }
     }
     
+    static function invertirFecha($fecha){
+        $aF= explode('-', $fecha);
+        $aux= $aF[0];
+        $aF[0]= $aF[2];
+        $aF[2]= $aux;
+        $nF= implode('-', $aF);
+        return $nF;
+    }
+    
     
 
 }
