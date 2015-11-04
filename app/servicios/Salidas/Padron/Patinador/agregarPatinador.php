@@ -14,7 +14,7 @@ if ($user) {
                     $patinador->fNacimiento, $patinador->sexo, $$patinador->nacionalidad,
                     false, date(DATE_W3C), $user->getClub()->getIdClub(),
                     $patinador->domicilio->direccion, $patinador->domicilio->cp,
-                    $patinador->domicilio->telefono, $patinador->domicilio->localidad, $patinador->domicilio->provincia,
+                    $patinador->domicilio->telefono, $patinador->domicilio->localidad, $patinador->domicilio->provincia, 
                     $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatSoloDance, $patinador->idCatFreeDance);
                 if($b==false){
                     return false;
@@ -30,7 +30,7 @@ if ($user) {
                         false, date(DATE_W3C), $patinador->idClub, $patinador->domicilio->direccion,
                         $patinador->domicilio->cp, $patinador->domicilio->telefono,
                         $patinador->domicilio->localidad, $patinador->domicilio->provincia,
-                        $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatDza);
+                        $patinador->idCatEsc, $patinador->idCatLibr, $patinador->idCatSoloDance, $patinador->idCatFreeDance);
                 if($b==false){
                     return false;
                 }

@@ -1,8 +1,5 @@
 <form name="nuevo">
-
-  <h2>Información personal</h2>
-  <hr>
-  <div class="form-group col-sm-6">
+  <div class="form-group col-lg-7">
     <label>Nombre</label>
     <input class="form-control formularios" name="nombre" ng-class="{'danger': nuevo.nombre.$invalid}" ng-model="personasController.patinador.nombre" required type="text">
     <span ng-if="nuevo.nombre.$invalid && nuevo.nombre.$dirty" class="label label-warning">Debe llenar el campo</span>
@@ -14,7 +11,7 @@
   </div>
   <div class="form-group col-sm-6">
     <label for="">Fecha de Nacimiento</label>
-    <input class="form-control formularios" name="fNacimiento" ng-model="personasController.patinador.fNacimiento" required="" ui-date="{dateFormat: 'dd-mm-yy', changeYear: true}">
+    <input class="form-control formularios" id="fNacimiento" name="fNacimiento" required="" ui-date="{dateFormat: 'dd-mm-yy', changeYear: true, yearRange: '1900:-0'}">
     <span ng-if="nuevo.fNacimiento.$invalid && nuevo.fNacimiento.$dirty" class="label label-warning">Debe llenar el campo</span>
   </div>
   <div class="form-group col-sm-6">
@@ -93,24 +90,31 @@
   </div>
   <div class="form-group col-sm-6">
     <label>Escuela</label>
-    <select name="categoriaEscuela" class="form-control formularios" ng-options="categoria.escuela as categoria.denominacion for categoria in personasController.categoriasEscuelaYlibre" ng-model="personasController.patinador.idCatEsc" required="">
+    <select name="categoriaEscuela" class="form-control formularios" ng-options="categoria.escuela as categoria.denominacion for categoria in personasController.categoriasEscuelaYlibre | filter: {escuela: 1}" ng-model="personasController.patinador.idCatEsc" required="">
         <option value="">Ninguna</option>
     </select>
     <span ng-if="nuevo.categoriaEscuela.$invalid && nuevo.categoriaEscuela.$dirty" class="label label-warning">Debe llenar el campo</span>
   </div>
   <div class="form-group col-sm-6">
     <label>Libre</label>
-    <select name="categoriaLibre" class="form-control formularios" ng-options="categoria.libre as categoria.denominacion for categoria in personasController.categoriasEscuelaYlibre" ng-model="personasController.patinador.idCatLibr" required="">
+    <select name="categoriaLibre" class="form-control formularios" ng-options="categoria.libre as categoria.denominacion for categoria in personasController.categoriasEscuelaYlibre | filter: {libre: 1}" ng-model="personasController.patinador.idCatLibr" required="">
         <option value="">Ninguna</option>
     </select>
     <span ng-if="nuevo.categoriaLibre.$invalid && nuevo.categoriaLibre.$dirty" class="label label-warning">Debe llenar el campo</span>
   </div>
   <div class="form-group col-sm-6">
-    <label>Danza Solista</label>
-    <select name="categoriaDanza" class="form-control formularios" ng-options="categoria.escuela as categoria.denominacion for categoria in personasController.categoriasDanza" ng-model="personasController.patinador.idCatSoloDance" required="">
+    <label>Solo dance</label>
+    <select name="categoriaSoloDance" class="form-control formularios" ng-options="categoria.soloDance as categoria.denominacion for categoria in personasController.categoriasDanza | filter: {soloDance: 1}" ng-model="personasController.patinador.idCatSoloDance" required="">
         <option value="">Ninguna</option>
     </select>
-    <span ng-if="nuevo.categoriaDanza.$invalid && nuevo.categoriaDanza.$dirty" class="label label-warning">Debe llenar el campo</span>
+    <span ng-if="nuevo.categoriaSoloDance.$invalid && nuevo.categoriaSoloDance.$dirty" class="label label-warning">Debe llenar el campo</span>
+  </div>
+  <div class="form-group col-sm-6">
+    <label>Free dance</label>
+    <select name="categoriaFreeDance" class="form-control formularios" ng-options="categoria.freeDance as categoria.denominacion for categoria in personasController.categoriasDanza | filter: {freeDance: 1}" ng-model="personasController.patinador.idCatFreeDance" required="">
+        <option value="">Ninguna</option>
+    </select>
+    <span ng-if="nuevo.categoriaFreeDance.$invalid && nuevo.categoriaFreeDance.$dirty" class="label label-warning">Debe llenar el campo</span>
   </div>
   <div class="form-group col-lg-12">
     <button class="btn btn-primary btn-lg" ng-click="personasController.agregarPatinadores()" ng-class="{'disabled': nuevo.$invalid}" type="button">Guardar</button>

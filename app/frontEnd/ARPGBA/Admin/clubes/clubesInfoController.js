@@ -16,7 +16,7 @@
 
 
     clubInfo.open = function(persona) {
-
+      
       var modalInstance = $modal.open({
         templateUrl: 'app/frontEnd/ARPGBA/clubes/modal/modal.tmpl.html',
         controller: 'modalController as modalController',

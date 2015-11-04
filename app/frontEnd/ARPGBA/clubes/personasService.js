@@ -12,12 +12,18 @@
       agregarPatinador: agregarPatinador
     };
 
-    function agregarPatinador(patinadorEs) {
+    function agregarPatinador(patinadores) {
+      var data = JSON.stringify(patinadores);
+
       var config = {
         url: 'app/servicios/Salidas/Padron/Patinador/agregarPatinador.php',
         method: 'POST',
-        data: patinadorEs,
+        data: 'patinadores='+data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
+      console.log(config.data);
       $http(config);
 
     }
