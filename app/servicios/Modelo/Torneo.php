@@ -58,6 +58,22 @@ class Torneo {
     function setRefArchivo($refArchivo) {
         $this->refArchivo = $refArchivo;
     }
+    function getListasBnaFe() {
+        return $this->listasBnaFe;
+    }
+
+    function getCompetencias() {
+        return $this->competencias;
+    }
+
+    function setListasBnaFe($listasBnaFe) {
+        $this->listasBnaFe = $listasBnaFe;
+    }
+
+    function setCompetencias($competencias) {
+        $this->competencias = $competencias;
+    }
+
 
 
     

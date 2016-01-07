@@ -13,6 +13,10 @@ require_once 'ControladorNotificacion.php';
 require_once 'ControladorPatinador.php';
 require_once 'ControladorTecnico.php';
 require_once 'ControladorUsuario.php';
+require_once 'ControladorListaBnaFe.php';
+require_once 'ControladorCompetencias.php';
+require_once 'ControladorTorneo.php';
+require_once 'ControladorReportes.php';
 
 
 class ServidorControladores {
@@ -30,7 +34,11 @@ class ServidorControladores {
     static private $cPatinador=null;
     static private $cTecnico=null;
     static private $cUsuario=null;
-    
+    static private $cListaBnaFe=null;
+    static private $cCompetencias=null;
+    static private $cTorneo=null;
+    static private $cReportes= null;
+            
     function __construct() {
         
     }
@@ -161,6 +169,41 @@ class ServidorControladores {
         return $nF;
     }
     
+    static function getConListaBnaFe(){
+        if (static::$cListaBnaFe==null) {
+            static::$cListaBnaFe= new ControladorListaBnaFe();
+            return static::$cListaBnaFe;
+        }  else {
+            return static::$cListaBnaFe;
+        }
+    }
+    
+    static function getConCompetencias(){
+        if (static::$cCompetencias==null) {
+            static::$cCompetencias= new ControladorCompetencias();
+            return static::$cCompetencias;
+        }  else {
+            return static::$cCompetencias;
+        }
+    }
+    
+    static function getConTorneo(){
+        if (static::$cTorneo==null) {
+            static::$cTorneo= new ControladorTorneo();
+            return static::$cTorneo;
+        }  else {
+            return static::$cTorneo;
+        }
+    }
+    
+    static function getConReportes(){
+        if (static::$cReportes==null) {
+            static::$cReportes= new ControladorReportes();
+            return static::$cReportes;
+        }  else {
+            return static::$cReportes;
+        }
+    }
     
 
 }

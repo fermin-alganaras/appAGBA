@@ -296,5 +296,34 @@ class ControladorCategoria extends ControladorGeneral {
            die($ex->getMessage()); 
         }
     }
+    
+    public function getOrdenCat($idCat){
+        $orden=null;
+        try {
+            if(!$r=  ServidorControladores::getConBD()->getConexion()->query("SELECT orden FROM categoria WHERE idCategoria='$idCat'")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while ($f=$r->fetch_array()){
+                $orden=$f['orden'];
+            }
+            
+        } catch (Exception $ex) {
+            die($ex->getMessage());
+        }
+        return $orden;
+    }
+    
+    public function defineCat(Modelo\Patinador $pat){
+        if (($pat->getCatEsc()->getOrden()>$pat->getCatLibre()->getOrden())) {
+            return $pat->getCatEsc();
+        }elseif(($pat->getCatEsc()->getOrden()<$pat->getCatLibre()->getOrden())){
+            return $pat->getCatLibre();
+        }elseif ($pat->getCatEsc()==NULL && $pat->getCatLibre()==NULL &&
+                $pat->getCatSoloDance()->getOrden()<$pat->getCatFreeDance()->getOrden()  ) {
+            return $pat->getCatSoloDance();
+        }  else {
+            return $pat->getCatFreeDance();
+        }
+    }
 
 }

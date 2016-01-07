@@ -166,9 +166,59 @@ class ControladorPatinador {
         }
     }
     
+    public function calculaEdad($idPat){
+        $edad=null;
+        $idPer=null;
+        try{
+            if (!$r=  ServidorControladores::getConBD()->getConexion()->query("SELECT idPer FROM patinador "
+                    . "WHERE idPatinador='$idPat'")) {
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while ($f=$r->fetch_array()){
+               $idPer= $f['idPer'];
+            }
+            if (!$r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT fNacimiento FROM persona "
+                    . "WHERE idPersona='$idPer'")) {
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while ($f2= $r2->fetch_array()){
+                $fecha= explode('-', $f2['fNacimiento']);
+                $edad= date('Y') - $fecha[0];
+            }
+        } catch (Exception $ex) {
+            die($ex->getMessage());
+        }
+        return $edad;
+    }
     
-    
-    
+    public function getSexoPatinador($idPat){
+        $s=null;
+        try {
+            if (!$r=  ServidorControladores::getConBD()->getConexion()->query("SELECT idPer FROM patinador "
+                    . "WHERE idPatinador='$idPat'")) {
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while ($f=$r->fetch_array()){
+               $idPer= $f['idPer'];
+            }
+            if (!$r2=  ServidorControladores::getConBD()->getConexion()->query("SELECT sexo FROM persona "
+                    . "WHERE idPersona='$idPer'")) {
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while ($f2= $r2->fetch_array()){
+                $sexo= $f2['fNacimiento'];
+                if ($sexo == 'F') {
+                    $s='DAMAS';
+                }else{
+                    $s='CABALLEROS';
+                }
+                
+            }
+            return $s;
+        } catch (Exception $ex) {
+            die ($ex->getMessage());
+        }
+    }
     
     
     
