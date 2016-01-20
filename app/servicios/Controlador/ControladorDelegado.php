@@ -7,13 +7,12 @@ require_once ('ControladorLicencia.php');
 require_once ('ControladorCategoria.php');
 require_once ('ControladorClub.php');
 
-class ControladorDelegado extends ControladorGeneral{
+class ControladorDelegado{
     private $cDom;
     private $cLic;
     private $cCat;
     private $cClub;
     function __construct() {
-        parent::__construct();
         $this->cDom= ServidorControladores::getConDomicilio();
         $this->cLic= ServidorControladores::getConLicencia();
         $this->cCat= ServidorControladores::getConCategoria();
@@ -43,7 +42,7 @@ class ControladorDelegado extends ControladorGeneral{
                     
             }            
             ServidorControladores::getConBD()->getConexion()->query("COMMIT");
-            return TRUE;
+            return $this->traerUltimoId();
         }  catch (mysqli_sql_exception $ex){
             ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             echo 'Error: '. $ex->getMessage();
@@ -73,7 +72,11 @@ class ControladorDelegado extends ControladorGeneral{
             $del->setIdDelegado($rPat['idDelegado']);
             $del->setIdPersona($rPat['idPersona']);
             $del->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
-            $del->setLicencia($this->cLic->traerLicenciaXIdPersona($del->getIdPersona()));
+            if($rPer['idLicencia']!= null){
+                $del->setLicencia($this->cLic->traerLicenciaXIdPersona($del->getIdPersona()));
+            }  else {
+                $del->setLicencia(null);
+            }
             $del->setFNacimiento(ServidorControladores::invertirFecha($del->getFNacimiento()));
             return $del;
         }  catch (mysqli_sql_exception $ex){
@@ -129,5 +132,26 @@ class ControladorDelegado extends ControladorGeneral{
         }
         
         return $delegado_array;
+    }
+     public function traerUltimoId(){
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPatinador) AS id FROM patinador" )->fetch_array();
+        
+        return $r['id'];    
+    }
+    
+    public function creaOHabilitaLicencia ($del, $tipo){
+        
+        if ($del->getLicencia()== null) {
+            $this->cLic->nuevaLicencia($tipo, 'true');
+            $idLic= $this->cLic->traerUltimoId();
+            $idP= $del->getIdPersona();
+            ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
+            return true;
+        }elseif($del->getLicencia()->getActiva()==false){
+            $this->cLic->habilitaODeshabilita($del->getLicencia());
+            return true;
+        }else{
+            return false;
+        }
     }
 }

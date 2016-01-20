@@ -8,8 +8,18 @@ class ControladorLicencia {
     }
     
     public function traerLicenciaXIdPersona($id){
+        $lic= null;
+        $idLic=null;
         try {
-            $rLic= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM licencia WHERE idLicencia='$id'");
+            if(!$rPer= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$id'")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while ($idLi=$rPer->fetch_array()) {
+                $idLic=$idLi['idLicencia'];
+            }
+            if(!$rLic= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM licencia WHERE idLicencia='$idLic'")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
             while($rL=$rLic->fetch_array()){
                 $lic= new Modelo\Licencia($rL['numero'], $rL['tipo'], $rL['activa']);
                 $lic->setIdLicencia($rL['idLicencia']);
@@ -17,7 +27,9 @@ class ControladorLicencia {
             }            
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
+            
         }
+        return $lic;
     }
     
     public function nuevaLicencia ($tipo, $activa){

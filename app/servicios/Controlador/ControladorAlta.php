@@ -1,12 +1,7 @@
 <?php
 
 require_once ('..\..\..\Modelo\Alta.php');
-require_once ('ControladorPatinador.php');
-require_once ('ControladorTecnico.php');
-require_once ('ControladorDelegado.php');
-require_once ('ControladorUsuario.php');
-require_once ('ControladorLicencia.php');
-require_once ('ControladorNotificacion.php');
+
 
  
 class ControladorAlta {
@@ -29,8 +24,11 @@ class ControladorAlta {
                 
     }
     
-    public function nuevaAlta($idsPat, $idsTec, $idsDel, $idUser){
+    public function nuevaAlta($idsPatinadores, $idsTecnicos, $idsDelegados, $idUser){
         $fecha= date(DATE_W3C);
+        $idsPat= json_encode($idsPatinadores);
+        $idsDel= json_encode($idsDelegados);
+        $idsTec= json_encode($idsTecnicos);
         try{
             ServidorControladores::getConBD()->getConexion()->query('START TRANSACTION');
             if(ServidorControladores::getConBD()->getConexion()->query("INSERT INTO alta VALUES(null,'$fecha','$idsPat','"
@@ -96,9 +94,9 @@ class ControladorAlta {
             while($f=$r->fetch_array()){
                 $a= new Modelo\Alta($f['fecha'], $f['atendida']);
                 $a->setIdAlta($f['idAlta']);
-                $idp= explode('-', $f['idsPat']);
-                $idt= explode('-', $f['idsTec']);
-                $idd= explode('-', $f['idsDel']);
+                $idp= json_decode($f['idsPat']);
+                $idt= json_decode($f['idsTec']);
+                $idd= json_decode($f['idsDel']);
                 if ((count($idp)>0) && ($idp[0]!=null)) {
                     foreach ($idp as $idPat) {
                         array_push($patinadores, $this->cPat->traerPatinadorXID($idPat));  

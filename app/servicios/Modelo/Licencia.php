@@ -3,9 +3,8 @@
 namespace Modelo;
 class Licencia {
     
-    public $IdLicencia;
+    public $idLicencia;
     public $numero;
-   
     public $tipo;
     public $activa;
     
@@ -17,7 +16,7 @@ class Licencia {
     }
     
     function getIdLicencia() {
-        return $this->IdLicencia;
+        return $this->idLicencia;
     }
 
     function getNumero() {
@@ -27,7 +26,7 @@ class Licencia {
     
 
     function setIdLicencia($IdLicencia) {
-        $this->IdLicencia = $IdLicencia;
+        $this->idLicencia = $IdLicencia;
     }
 
     function setNumero($numero) {

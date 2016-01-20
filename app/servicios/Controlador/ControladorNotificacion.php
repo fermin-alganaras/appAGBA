@@ -1,7 +1,8 @@
 <?php
 
 require_once ('ControladorAlta.php');
-class ControladorNotificacion extends ControladorGeneral {
+require_once '..\..\..\Modelo\Notificacion.php';
+class ControladorNotificacion {
    
     
     function __construct() {
@@ -49,5 +50,20 @@ class ControladorNotificacion extends ControladorGeneral {
         } catch (mysqli_sql_exception $ex) {
             echo $ex->getMessage();
         }
+    }
+    
+    public function traerNotifUser($id){
+        $notificaciones=array();
+        $fecha= ServidorControladores::getConUsuario()->traerUsuarioXID($id)->getUltimaSesion();
+        if (!$r=ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM notificacion WHERE idReceptor='$id' AND fecha>'$fecha' ORDER BY fecha")) {
+            die(ServidorControladores::getConBD()->getConexion()->error);
+        }
+        
+        while($n= $r->fetch_array()){
+            $notif= new Modelo\Notificacion($n['tipo'], $n['texto'], $n['idEmisor'], $n['idReceptor'], $n['fecha'], $n['idElemento'] );
+            array_push($notificaciones, $notif);
+        }
+        
+        return $notificaciones;
     }
 }

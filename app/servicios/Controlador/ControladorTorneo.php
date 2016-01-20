@@ -73,7 +73,7 @@ class ControladorTorneo {
     }
     
     public function guardarDataTorneo(Modelo\Torneo $torneo){
-        if (file_exists("..\..\'$torneo->denominacion'.json")) {
+        if (file_exists("..\..\..\'$torneo->denominacion'.json")) {
             fopen("..\..\'$torneo->denominacion'.json", 'w');
             $dataJson= json_encode($torneo->getCompetencias());
             file_put_contents("..\..\'$torneo->denominacion'.json", $dataJson);
