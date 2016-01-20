@@ -45,7 +45,7 @@ class ControladorListaBnaFe {
                 //$archivo=  fopen($dir, 'r');
                 $datos= file_get_contents($dir);
                 $arrayDatos= json_decode($datos);
-                $this->descodificaDatos($arrayDatos, $lista);
+                $lista->setInfoLista($this->descodificaDatos($arrayDatos));
             }
             
         } catch (Exception $ex) {
@@ -54,29 +54,29 @@ class ControladorListaBnaFe {
         return $lista;
     }
     
-    private function descodificaDatos( $datos, $lista){
+    private function descodificaDatos($datos){
+        $arrayDatos= array();
         foreach ($datos->patinadores AS $i){
             $item= new Modelo\ItemListaSolista($i->idPatinador, $i->idCategoria, $i->esc, $i->libr, 
                     $i->solo, $i->free);
-            array_push($lista->getInfoLista(), $item);
+            array_push($arrayDatos, $item);
         }
         foreach ($datos->parejas AS $p){
              $item= new Modelo\ItemListaPareja($p->idPatCab, $p->idPatDam, $p->idCategoria, $p->libr, 
                     $p->solo, $p->free);
-            array_push($lista->getInfoLista(), $item);
+            array_push($arrayDatos, $item);
         }
-        
         foreach ($datos->grupales AS $g){
              $item= new Modelo\ItemListaGrupal($g->nombreGrupal, $g->idsPatinadores, 
                     $g->idCategoria);
-            array_push($lista->getInfoLista(), $item);
+            array_push($arrayDatos, $item);
         }
         
         foreach ($datos->tecDeg AS $td ){
              $item= new Modelo\ItemListaTecDel($td->idTecDel, $td->tipo);
-            array_push($lista->getInfoLista(), $item);
+            array_push($arrayDatos, $item);
         }
-        
+        return $arrayDatos;
     }
     
     public function traerListasXTorneo($idTorneo){

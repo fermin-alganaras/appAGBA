@@ -41,7 +41,7 @@ class ControladorPatinador {
                     ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }            
             ServidorControladores::getConBD()->getConexion()->query("COMMIT");
-            return TRUE;
+            return $this->traerUltimoId();
         }  catch (mysqli_sql_exception $ex){
             ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             echo 'Error: '. $ex->getMessage();
@@ -51,12 +51,16 @@ class ControladorPatinador {
     
     public function traerPatinadorXID($id){
         try{
-            $rPat=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPatinador='$id'")->fetch_array();
-            $idP=$rPat['idPer'];
-            $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'")->fetch_array();
-            
-            $pat= $this->armarPatinador($rPer, $rPat);
-            return $pat;
+            $rP=null;
+            $idP=null;
+            $rPat=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPatinador='$id'");
+            while($rP=$rPat->fetch_array()){
+                $idP=$rP['idPer'];
+                $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'")->fetch_array();
+                $pat= $this->armarPatinador($rPer, $rP);
+                return $pat;
+            }
+                   
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
             return null;
@@ -81,7 +85,11 @@ class ControladorPatinador {
             $pat->setIdPatinador($rPat['idPatinador']);
             $pat->setIdPersona($rPat['idPer']);
             $pat->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
-            $pat->setLicencia($this->cLic->traerLicenciaXIdPersona($pat->getIdPersona()));
+            if(!$rPer['idLicencia']==NULL){
+                $pat->setLicencia($this->cLic->traerLicenciaXIdPersona($rPat['idPer']));
+            }else{
+                $pat->setLicencia(NULL);
+            }
             $pat->setCatEsc($this->cCat->traerCategoriaXID($rPat['idCatEsc']));
             $pat->setCatLibre($this->cCat->traerCategoriaXID($rPat['idCatLibre']));
             $pat->setCatSoloDance($this->cCat->traerCategoriaXID($rPat['idCatSoloDance']));
@@ -98,7 +106,7 @@ class ControladorPatinador {
         $patinadores_array= array();
         try{
             if ($idClub!=0) {
-                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub'");
+                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub' ORDER BY apellido, nombre");
                  
                  while ($f=$r1->fetch_array()) {
                     $idP=$f['idPersona'];
@@ -108,7 +116,7 @@ class ControladorPatinador {
                     }
                  }
             }else {
-                $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona");
+                $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona ORDER BY apellido, nombre");
                 while ($f=$r1->fetch_array()) {
                      array_push($datos_persona, $f);                
                 }    
@@ -130,8 +138,9 @@ class ControladorPatinador {
     public function listarActivosXClub($idClub){
         $patinadores_array= $this->listarTodosXClub($idClub);
         foreach ($patinadores_array as $p){
-            if (!($p->getLicencia()->getActiva())) {
-                unset($p);
+            if (!($p->getLicencia()->getActiva()==true)) {
+                $i=$key($patinadores_array);
+                unset($patinadores_array[$i]);
             }
         }
         
@@ -220,6 +229,11 @@ class ControladorPatinador {
         }
     }
     
+    public function traerUltimoId(){
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPatinador) AS id FROM patinador" )->fetch_array();
+        
+        return $r['id'];    
+    }
     
     
 

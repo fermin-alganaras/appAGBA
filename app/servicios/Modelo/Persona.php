@@ -124,8 +124,8 @@ abstract class Persona {
     function setDomicilio($domicilio) {
         $this->domicilio = $domicilio;
     }
-
-
+    
+    
 
 
 

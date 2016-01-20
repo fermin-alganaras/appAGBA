@@ -38,7 +38,7 @@ class ControladorTecnico {
                     ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             }            
             ServidorControladores::getConBD()->getConexion()->query("COMMIT");
-            return TRUE;
+            return $this->traerUltimoId();
         }  catch (mysqli_sql_exception $ex){
             ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
             echo 'Error: '. $ex->getMessage();
@@ -72,7 +72,11 @@ class ControladorTecnico {
             $tec->setIdTecnico($rPat['idTecnico']);
             $tec->setIdPersona($rPat['idPersona']);
             $tec->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
-            $tec->setLicencia($this->cLic->traerLicenciaXIdPersona($tec->getIdPersona()));
+            if($rPer['idLicencia']!= null){
+                $tec->setLicencia($this->cLic->traerLicenciaXIdPersona($tec->getIdPersona()));
+            }  else {
+                $tec->setLicencia(null);
+            }
             $tec->setCategoria($this->cCat->traerCategoriaXID($rPat['idCategoria']));
             $tec->setFNacimiento(ServidorControladores::invertirFecha($tec->getFNacimiento()));
             return $tec;
@@ -131,19 +135,25 @@ class ControladorTecnico {
         return $tecnicos_array;
     }
     
-    public function creaOHabilitaLicencia ($idTec, $tipo){
-        $tec= $this->traerTecnicoXID($idTec);
+    public function creaOHabilitaLicencia ($tec, $tipo){
+        
         if ($tec->getLicencia()== null) {
             $this->cLic->nuevaLicencia($tipo, 'true');
             $idLic= $this->cLic->traerUltimoId();
             $idP= $tec->getIdPersona();
-            ServidorControladores::getConBD()->getConexion->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
+            ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
             return true;
         }elseif($tec->getLicencia()->getActiva()==false){
-            $this->cLic->habilitaODeshabilita($pat->getLicencia());
+            $this->cLic->habilitaODeshabilita($tec->getLicencia());
             return true;
         }else{
             return false;
         }
+    }
+    
+     public function traerUltimoId(){
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPatinador) AS id FROM patinador" )->fetch_array();
+        
+        return $r['id'];    
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 require_once '..\..\..\Modelo\Categoria.php';
-class ControladorCategoria extends ControladorGeneral {
+class ControladorCategoria {
     
     function __construct() {
         
@@ -55,16 +55,18 @@ class ControladorCategoria extends ControladorGeneral {
     }
     
     public function traerCategoriaXID($id){
+        $cat=null;
         try{
             $r=ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM categoria WHERE idCategoria='$id'")->fetch_array();
             $cat= new Modelo\Categoria($r['denominacion'], $r['orden'], $r['modo'], $r['tipoLicencia'], $r['escuela'],
                     $r['libre'], $r['soloDance'], $r['freeDance'], $r['showPresicion'], $r['solista'], $r['pareja'],
                     $r['grupal'], $r['tipoPersona']);
             $cat->setIdCategoria($r['idCategoria']);
-            return $cat;
+            
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
+        return $cat;
     } 
     
     public function traerUltimoId(){

@@ -1,6 +1,7 @@
 <?php
 
 namespace Modelo;
+require_once 'Persona.php';
 class Delegado extends Persona{
     public $idDelegado;
     public $email;

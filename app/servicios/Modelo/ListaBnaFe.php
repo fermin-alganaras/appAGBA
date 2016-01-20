@@ -129,12 +129,12 @@ class ItemListaSolista {
 
 class ItemListaPareja {
 
-    private $idPatCab;
-    private $idPatDam;
-    private $idCategoria;
-    private $libre;
-    private $solo;
-    private $free;
+    public $idPatCab;
+    public $idPatDam;
+    public $idCategoria;
+    public $libre;
+    public $solo;
+    public $free;
 
     function __construct($idPatCab, $idPatDam, $idCategoria, $libre, $solo, $free) {
         $this->idPatCab = $idPatCab;
@@ -197,9 +197,9 @@ class ItemListaPareja {
 
 class ItemListaGrupal {
 
-    private $nombreGrupal;
-    private $idsPatinadores;
-    private $idCategoria;
+    public $nombreGrupal;
+    public $idsPatinadores;
+    public $idCategoria;
 
     function __construct($nombreGrupal, $idsPatinadores, $idCategoria) {
         $this->nombreGrupal = $nombreGrupal;
@@ -235,8 +235,8 @@ class ItemListaGrupal {
 
 class ItemListaTecDel {
 
-    private $idTecDel;
-    private $tipo;
+    public $idTecDel;
+    public $tipo;
 
     function __construct($idTecDel, $tipo) {
         $this->idTecDel = $idTecDel;
