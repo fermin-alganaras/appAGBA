@@ -222,7 +222,9 @@ class ControladorReportes {
         
         foreach ($lista->getInfoLista() as $comp) {
             if ($comp instanceof Modelo\ItemListaSolista) {
-                $pat= $this->cPat->traerPatinadorXID($comp->getIdPatinador());
+                $id=$comp->idPatinador;
+                $pat= $this->cPat->traerPatinadorXID($id);
+                               
                 if ($comp->getEsc()==true) {
                     $e='X';
                 }else{
@@ -243,19 +245,18 @@ class ControladorReportes {
                 }else{
                     $f=' ';
                 }
-                $listaExcel->getActiveSheet()
-                    ->setCellValue('B'.$nFila, $this->cLic->traerLicenciaXIdPersona($pat->getIdPersona())->getNumero())
-                    ->setCellValue('C'.$nFila, $pat->getDNI())
-                    ->setCellValue('D'.$nFila, $pat->getApellido())
-                    ->setCellValue('E'.$nFila, $pat->getNombre())
-                    ->setCellValue('F'.$nFila, ServidorControladores::invertirFecha($pat->getFNacimiento()))
-                    ->setCellValue('G'.$nFila, $pat->getSexo())
-                    ->setCellValue('H'.$nFila, $pat->getNacionalidad())
-                    ->setCellValue('I'.$nFila, ServidorControladores::getConCategoria()->traerCategoriaXID($comp->getIdCategoria()))
-                    ->setCellValue('J'.$nFila, $e)
-                    ->setCellValue('K'.$nFila, $l)
-                    ->setCellValue('L'.$nFila, $s)
-                    ->setCellValue('M'.$nFila, $f);        
+                $listaExcel->getActiveSheet()->setCellValue('B'.$nFila, $pat->getLicencia()->getNumero());
+                    $listaExcel->getActiveSheet()->setCellValue('C'.$nFila, $pat->getDNI());
+                    $listaExcel->getActiveSheet()->setCellValue('D'.$nFila, $pat->getApellido());
+                    $listaExcel->getActiveSheet()->setCellValue('E'.$nFila, $pat->getNombre());
+                    $listaExcel->getActiveSheet()->setCellValue('F'.$nFila, ServidorControladores::invertirFecha($pat->getFNacimiento()));
+                    $listaExcel->getActiveSheet()->setCellValue('G'.$nFila, $pat->getSexo());
+                    $listaExcel->getActiveSheet()->setCellValue('H'.$nFila, $pat->getNacionalidad());
+                    $listaExcel->getActiveSheet()->setCellValue('I'.$nFila, ServidorControladores::getConCategoria()->traerCategoriaXID($comp->getIdCategoria())->getDenominacion());
+                    $listaExcel->getActiveSheet()->setCellValue('J'.$nFila, $e);
+                    $listaExcel->getActiveSheet()->setCellValue('K'.$nFila, $l);
+                    $listaExcel->getActiveSheet()->setCellValue('L'.$nFila, $s);
+                    $listaExcel->getActiveSheet()->setCellValue('M'.$nFila, $f);        
                 $listaExcel->getActiveSheet()->getCell('B'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $listaExcel->getActiveSheet()->getCell('C'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $listaExcel->getActiveSheet()->getCell('D'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
@@ -270,8 +271,10 @@ class ControladorReportes {
                 $listaExcel->getActiveSheet()->getCell('M'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $nFila++;
             }elseif($comp instanceof Modelo\ItemListaPareja){
-                 $dam= $this->cPat->traerPatinadorXID($comp->getIdPatDam());
-                 $cab= $this->cPat->traerPatinadorXID($comp->getIdPatCab());
+                $idD=$comp->getIdPatDam();
+                $idC=$comp->getIdPatCab();
+                $dam= $this->cPat->traerPatinadorXID($idD);
+                $cab= $this->cPat->traerPatinadorXID($idC);
                 $e=' ';
                 if ($comp->getLibr()==true) {
                     $l='X';
