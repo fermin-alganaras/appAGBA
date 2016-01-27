@@ -15,6 +15,7 @@ class ControladorDomicilio {
         }
     }
     
+ 
     public function traerUltimoId(){
         $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idDomicilio) AS id FROM domicilio" )->fetch_array();
         
@@ -28,12 +29,12 @@ class ControladorDomicilio {
         return $d;
     }
     
-    public function actualizarDomicilio(Domicilio $dom){
+    public function actualizarDomicilio(Modelo\Domicilio $dom){
         try{
             ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION");
-            ServidorControladores::getConBD()->getConexion()->query("UPDATE Domicilio direccion=".$dom->getDireccion()." cp=". $dom->getCp().
-                " telefono=". $dom->getTelefono(). " localidad=". $dom->getLocalidad(). " provincia=".$dom->getProvincia().
-                " WHERE idDomicilio=".$dom->getIdDomicilio());
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE domicilio set direccion='$dom->direccion', cp='$dom->cp', telefono='$dom->telefono', localidad='$dom->localidad', provincia='$dom->provincia' WHERE idDomicilio='$dom->idDomicilio'")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
             ServidorControladores::getConBD()->getConexion()->query("COMMIT");
         } catch(mysqli_sql_exception $ex){
             ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");

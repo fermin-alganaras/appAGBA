@@ -15,9 +15,11 @@ class ControladorClub {
         try{
             $this->cDom->insertarDomicilio($direccion, $cp, $telefono, $localidad, $provincia);
             $idDomicilio= $this->cDom->traerUltimoID();
-            $b=ServidorControladores::getConBD()->getConexion()->query("INSERT INTO club VALUES(default,'$nombre
-                    ','$presidente','$secretario','$idDomicilio')");
-            return $b;
+            if(!ServidorControladores::getConBD()->getConexion()->query("INSERT INTO club VALUES(default,'$nombre
+                    ','$presidente','$secretario','$idDomicilio')")){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            return $this->traerClubXID($this->traerUltimoId());
         } catch (mysqli_sql_exception $ex) {
             echo 'Error: '. $ex->getMessage();
         }
@@ -51,5 +53,8 @@ class ControladorClub {
             
         }
     }
-
+    public function traerUltimoId(){
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idClub) AS id FROM club" )->fetch_array();
+        return $r['id'];    
+    }
 }

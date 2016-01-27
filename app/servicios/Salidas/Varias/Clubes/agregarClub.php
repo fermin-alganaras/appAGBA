@@ -12,10 +12,7 @@ if ($user->getTipo()=='admin'){
         $datos= json_decode($_POST['club']);
         $b= ServidorControladores::getConClub()->agregarClub($datos->nombre, $datos->presidente, $datos->secretario,
         $datos->direccion, $datos->cp, $datos->telefono, $datos->localidad, $datos->provincia);
-        if(!$b){
-            die('Error al insertar club');
-        }
-        return true;
+        echo json_encode($b);
     }
 }  else {
     echo 'No tiene permisos para realizar esta accion';
