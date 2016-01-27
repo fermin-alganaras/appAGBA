@@ -21,6 +21,24 @@ class ControladorPatinador {
         $this->cClub= ServidorControladores::getConClub();
     }
     
+    public function actualizarPatinador(Modelo\Patinador $pat){
+        try{
+            ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION");
+            $this->cDom->actualizarDomicilio($pat->getDomicilio());
+            if(!ServidorControladores::getConBD()->getConexion()->query("update persona set apellido='$pat->apellido', nombre='$pat->nombre',dni='$pat->dni', fnacimiento='$pat->fNacimiento' where idPersona='$pat->idPersona'")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
+               
+            }                                    
+            ServidorControladores::getConBD()->getConexion()->query("COMMIT");
+            return true;
+        }  catch (mysqli_sql_exception $ex){
+            ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
+            echo 'Error: '. $ex->getMessage();
+            return FALSE;
+        }
+    }
+    
     public function insertarPatinador($apellido, $nombre, $dni, $fNacimiento, $sexo, $nacionalidad, $exportada, $fechaAlta,
             $idClub, $direccion, $cp, $telefono, $localidad, $provincia, $idCatEsc, $idCatLibr, $idSoloDance, $idCatFreeDance){
         try{
@@ -85,6 +103,7 @@ class ControladorPatinador {
             $pat->setIdPatinador($rPat['idPatinador']);
             $pat->setIdPersona($rPat['idPer']);
             $pat->setDomicilio($this->cDom->traerDomicilioXID($rPer['idDomicilio']));
+            $pat->setClub(ServidorControladores::getConClub()->traerClubXID($rPer['idClub']));
             if(!$rPer['idLicencia']==NULL){
                 $pat->setLicencia($this->cLic->traerLicenciaXIdPersona($rPat['idPer']));
             }else{
@@ -106,7 +125,7 @@ class ControladorPatinador {
         $patinadores_array= array();
         try{
             if ($idClub!=0) {
-                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub' ORDER BY apellido, nombre");
+                 $r1= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idClub='$idClub' ORDER BY apellido");
                  
                  while ($f=$r1->fetch_array()) {
                     $idP=$f['idPersona'];

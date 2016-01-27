@@ -46,13 +46,30 @@ class ControladorTecnico {
         }
     }
     
+    public function actualizarTecnico(Modelo\Tecnico $tec){
+        try{
+            ServidorControladores::getConBD()->getConexion()->query("START TRANSACTION");
+            $this->cDom->actualizarDomicilio($tec->getDomicilio());
+            if(!ServidorControladores::getConBD()->getConexion()->query("update persona set apellido='$tec->apellido', nombre='$tec->nombre', dni='$tec->dni', fnacimiento='$tec->fNacimiento' where idPersona='$tec->idPersona'")){
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }                                    
+            ServidorControladores::getConBD()->getConexion()->query("COMMIT");
+            return true;
+        }  catch (mysqli_sql_exception $ex){
+            ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
+            echo 'Error: '. $ex->getMessage();
+            return FALSE;
+        }
+    }
+    
     public function traerTecnicoXID($id){
         $tec=null;
         try{
             $rTec=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM tecnico WHERE idTecnico='$id'");
             while($f= $rTec->fetch_array()){
                 $idP=$f['idPersona'];
-                $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'")->fetch_array();
+                $rPer=  ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM persona WHERE idPersona='$idP'");
                 while($f2= $rPer->fetch_array()){
                     $tec= $this->armarTecnico($f2, $f);
                 }
@@ -79,6 +96,7 @@ class ControladorTecnico {
             }
             $tec->setCategoria($this->cCat->traerCategoriaXID($rPat['idCategoria']));
             $tec->setFNacimiento(ServidorControladores::invertirFecha($tec->getFNacimiento()));
+            $tec->setClub(ServidorControladores::getConClub()->traerClubXID($rPer['idClub']));
             return $tec;
         }  catch (mysqli_sql_exception $ex){
             echo 'Error: ' . $ex->getMessage();
