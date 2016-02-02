@@ -53,7 +53,12 @@ class ControladorTecnico {
             if(!ServidorControladores::getConBD()->getConexion()->query("update persona set apellido='$tec->apellido', nombre='$tec->nombre', dni='$tec->dni', fnacimiento='$tec->fNacimiento' where idPersona='$tec->idPersona'")){
                 ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
                 die(ServidorControladores::getConBD()->getConexion()->error);
-            }                                    
+            }
+            $idCat=$tec->categoria->idCategoria;
+            if(!ServidorControladores::getConBD()->getConexion()->query("update tecnico set idCategoria='$idCat' where idTecnico='$tec->idTecnico'")){
+                ServidorControladores::getConBD()->getConexion()->query("ROLLBACK");
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            } 
             ServidorControladores::getConBD()->getConexion()->query("COMMIT");
             return true;
         }  catch (mysqli_sql_exception $ex){
@@ -156,10 +161,12 @@ class ControladorTecnico {
     public function creaOHabilitaLicencia ($tec, $tipo){
         
         if ($tec->getLicencia()== null) {
-            $this->cLic->nuevaLicencia($tipo, 'true');
+            $this->cLic->nuevaLicencia($tipo);
             $idLic= $this->cLic->traerUltimoId();
             $idP= $tec->getIdPersona();
-            ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP'")){
+                die(ServidorControladores::getConBD()->getConexion()->error . 'en tecnico');
+            }
             return true;
         }elseif($tec->getLicencia()->getActiva()==false){
             $this->cLic->habilitaODeshabilita($tec->getLicencia());
@@ -174,4 +181,47 @@ class ControladorTecnico {
         
         return $r['id'];    
     }
+    
+    public function pendientesExportar(){
+        $pendientes=array();
+        try{
+            if(!$r= ServidorControladores::getConBD()->getConexion()->query('SELECT * FROM persona WHERE exportada=1')){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while($f1=$r->fetch_array()){
+                $idP=$f1['idPersona'];
+                if(!$r2= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM tecnico WHERE idPersona='$idP'")){
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                }
+                while($f2=$r2->fetch_array()){
+                    $pat= $this->armarTecnico($f1, $f2);
+                    array_push($pendientes, $pat);
+                }
+            }
+        } catch (Exception $ex) {
+
+        }
+        return $pendientes;
+    }
+    
+    public function activoDefinitivo($idPersona){
+        try {
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET exportada=2 WHERE idPersona='$idPersona'")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    public function activoPendientes($idPersona){
+        try {
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET exportada=1 WHERE idPersona='$idPersona'")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
+    
 }
