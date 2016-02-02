@@ -14,7 +14,7 @@ if ($user) {
         $b=$cAlta->aceptarAlta($idAlta);
         echo $b;
     }else{
-        throw Exception("EL usuario no tiene permiso para usar esta funcion");
+        die("EL usuario no tiene permiso para usar esta funcion");
     }
 }
 

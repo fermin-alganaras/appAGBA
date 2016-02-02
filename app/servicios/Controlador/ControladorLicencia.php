@@ -32,9 +32,9 @@ class ControladorLicencia {
         return $lic;
     }
     
-    public function nuevaLicencia ($tipo, $activa){
+    public function nuevaLicencia ($tipo){
         try{
-            if(!ServidorControladores::getConBD()->getConexion()->query("INSERT INTO licencia VALUES(null, 'E/T','$tipo','$activa')")){
+            if(!ServidorControladores::getConBD()->getConexion()->query("INSERT INTO licencia VALUES(null, 'E/T','$tipo','true')")){
                 die(ServidorControladores::getConBD()->getConexion()->error);
             }
         } catch(mysqli_sql_exception $ex){
@@ -51,9 +51,13 @@ class ControladorLicencia {
         try {
             if (!$lic->getActiva()==true) {
                 $id= $lic->getIdLicencia();
-                ServidorControladores::getConBD()->getConexion->query("UPDATE licencia SET (activa=true) WHERE idLicencia='$id" );
+                if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE licencia SET activa='true' WHERE idLicencia='$id'" )){
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                }
             }else {
-                ServidorControladores::getConBD()->getConexion->query("UPDATE licencia SET (activa=false) WHERE idLicencia='$id");
+                if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE licencia SET activa='false' WHERE idLicencia='$id'")){
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                }
             }
             
         } catch (mysqli_sql_exception $ex) {
@@ -61,15 +65,21 @@ class ControladorLicencia {
         }
     }
     
-    public function defineLicencia($catEsc, $catLibr, $catDza){
+    public function defineLicencia($catEsc, $catLibr, $catSD, $catFD){
         if (($catEsc->getOrden()>=$catLibr->getOrden()||($catLibr==null))
-                &&(($catEsc->getOrden()>=$catDza->getOrden())||($catDza==null))) {
+                &&(($catEsc->getOrden()>=$catSD->getOrden())||($catSD==null))
+                &&(($catEsc->getOrden()>=$catFD->getOrden())||($catFD==null))) {
             return $catEsc->getTipoLicencia();
         }elseif (($catEsc->getOrden()<=$catLibr->getOrden()||($catEsc==null))
-                &&(($catLibr->getOrden()>=$catDza->getOrden())||($catDza==null))) {
+                &&(($catLibr->getOrden()>=$catSD->getOrden())||($catSD==null))&& 
+                (($catLibr->getOrden()>=$catFD->getOrden())||($catFD==null))) {
             return $catLibr->getTipoLicencia();
+        }elseif (($catEsc->getOrden()<=$catSD->getOrden()||($catEsc==null))
+                &&(($catLibr->getOrden()<=$catSD->getOrden())||($catLibr==null))&& 
+                (($catSD->getOrden()>=$catFD->getOrden())||($catFD==null))) {
+                return $catSD->getTipoLicencia();
         }else{
-            return $catDza->getTipoLicencia();
+            return $catFD->getTipoLicencia();
         }
     }
 

@@ -171,10 +171,12 @@ class ControladorDelegado {
     public function creaOHabilitaLicencia($del, $tipo) {
 
         if ($del->getLicencia() == null) {
-            $this->cLic->nuevaLicencia($tipo, 'true');
+            $this->cLic->nuevaLicencia($tipo);
             $idLic = $this->cLic->traerUltimoId();
             $idP = $del->getIdPersona();
-            ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP");
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET idLicencia='$idLic' WHERE idPersona='$idP'")){
+                die(ServidorControladores::getConBD()->getConexion()->error. 'en delegado');
+            }
             return true;
         } elseif ($del->getLicencia()->getActiva() == false) {
             $this->cLic->habilitaODeshabilita($del->getLicencia());
@@ -183,5 +185,46 @@ class ControladorDelegado {
             return false;
         }
     }
+    
+    public function pendientesExportar(){
+        $pendientes=array();
+        try{
+            if(!$r= ServidorControladores::getConBD()->getConexion()->query('SELECT * FROM persona WHERE exportada=1')){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while($f1=$r->fetch_array()){
+                $idP=$f1['idPersona'];
+                if(!$r2= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM delegado WHERE idPersona='$idP'")){
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                }
+                while($f2=$r2->fetch_array()){
+                    $pat= $this->armarDelegado($f1, $f2);
+                    array_push($pendientes, $pat);
+                }
+            }
+        } catch (Exception $ex) {
 
+        }
+        return $pendientes;
+    }
+    
+    public function activoDefinitivo($idPersona){
+        try {
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET exportada=2 WHERE idPersona='$idPersona'")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    public function activoPendientes($idPersona){
+        try {
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET exportada=1 WHERE idPersona='$idPersona'")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
 }

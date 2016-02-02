@@ -21,10 +21,11 @@ class ControladorReportes {
         $padronExcel= new PHPExcel();
         $nFila=3;
         
-        $padronExcel->getProperties()
-                ->setTitle('Padron'.time().$this->cClub->getClubXID($idClub)->getNombre());
         
-        $padronExcel->addSheet(0);
+        $padronExcel->getProperties()
+                ->setTitle('Padron'.time().$this->cClub->traerClubXID($idClub)->getNombre());
+        
+        
         $padronExcel->setActiveSheetIndex(0)
                 ->setCellValue('B2', 'Lic Nacional Nª')
                 ->setCellValue('C2', 'DNI Nº')
@@ -33,13 +34,14 @@ class ControladorReportes {
                 ->setCellValue('F2', 'Fecha de Nacimiento')
                 ->setCellValue('G2', 'Sexo')
                 ->setCellValue('H2', 'Nacionalidad')
-                ->setCellValue('I2', 'Categoria')
-                ->setCellValue('J2', 'Domicilio')
-                ->setCellValue('K2', 'CP')
-                ->setCellValue('L2', 'Localidad')
-                ->setCellValue('M2', 'Provincia')
-                ->setCellValue('N2', 'Telefono')
-                ->setCellValue('O2', 'Tipo Licencia');
+                ->setCellValue('I2', 'Club')
+                ->setCellValue('J2', 'Categoria')
+                ->setCellValue('K2', 'Domicilio')
+                ->setCellValue('L2', 'CP')
+                ->setCellValue('M2', 'Localidad')
+                ->setCellValue('N2', 'Provincia')
+                ->setCellValue('O2', 'Telefono')
+                ->setCellValue('P2', 'Tipo Licencia');
             $padronExcel->getActiveSheet()->getCell('B2')->getStyle()->applyFromArray($this->formatoTitulos());
             $padronExcel->getActiveSheet()->getCell('C2')->getStyle()->applyFromArray($this->formatoTitulos());
             $padronExcel->getActiveSheet()->getCell('D2')->getStyle()->applyFromArray($this->formatoTitulos());
@@ -53,26 +55,34 @@ class ControladorReportes {
             $padronExcel->getActiveSheet()->getCell('L2')->getStyle()->applyFromArray($this->formatoTitulos());
             $padronExcel->getActiveSheet()->getCell('M2')->getStyle()->applyFromArray($this->formatoTitulos());
             $padronExcel->getActiveSheet()->getCell('N2')->getStyle()->applyFromArray($this->formatoTitulos());
-            $padronExcel->getActiveSheet()->getCell('O2')->getStyle()->applyFromArray($this->formatoTitulos());    
+            $padronExcel->getActiveSheet()->getCell('O2')->getStyle()->applyFromArray($this->formatoTitulos());
+            $padronExcel->getActiveSheet()->getCell('P2')->getStyle()->applyFromArray($this->formatoTitulos()); 
         
                 
         foreach ($datos as $fila) {
             if ($fila instanceof Modelo\Patinador){
+                $numero;
+                if ($fila->getLicencia()!=null) {
+                    $numero=$fila->getLicencia()->getNumero();
+                }else{
+                    $numero='Sin Licencia';
+                }
                 $padronExcel->setActiveSheetIndex(0)
-                ->setCellValue('B'.$nFila, $fila->getLicencia()->getNumero())
+                ->setCellValue('B'.$nFila, $numero)
                 ->setCellValue('C'.$nFila, $fila->getDni())
                 ->setCellValue('D'.$nFila, $fila->getApellido())
                 ->setCellValue('E'.$nFila, $fila->getNombre())
                 ->setCellValue('F'.$nFila, ServidorControladores::invertirFecha($fila->getFNacimiento()))
                 ->setCellValue('G'.$nFila, $fila->getSexo())
                 ->setCellValue('H'.$nFila, $fila->getNacionalidad())
-                ->setCellValue('I'.$nFila, ServidorControladores::getConCategoria()->defineCat($fila))
-                ->setCellValue('J'.$nFila, $fila->getDomicilio()->getDireccion())
-                ->setCellValue('K'.$nFila, $fila->getDomicilio()->getCP())
-                ->setCellValue('L'.$nFila, $fila->getDomicilio()->getLocalidad())
-                ->setCellValue('M'.$nFila, $fila->getDomicilio()->getProvincia())
-                ->setCellValue('N'.$nFila, $fila->getDomicilio()->getTelefono())
-                ->setCellValue('O'.$nFila, $fila->getLicencia()->getTipo());
+                ->setCellValue('I'.$nFila, $fila->getClub()->getNombre())
+                ->setCellValue('J'.$nFila, ServidorControladores::getConCategoria()->defineCat($fila)->getDenominacion())
+                ->setCellValue('K'.$nFila, $fila->getDomicilio()->getDireccion())
+                ->setCellValue('L'.$nFila, $fila->getDomicilio()->getCP())
+                ->setCellValue('M'.$nFila, $fila->getDomicilio()->getLocalidad())
+                ->setCellValue('N'.$nFila, $fila->getDomicilio()->getProvincia())
+                ->setCellValue('O'.$nFila, $fila->getDomicilio()->getTelefono())
+                ->setCellValue('P'.$nFila, ServidorControladores::getConCategoria()->defineCat($fila)->getTipoLicencia());
                 $padronExcel->getActiveSheet()->getCell('B'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('C'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('D'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
@@ -87,23 +97,31 @@ class ControladorReportes {
                 $padronExcel->getActiveSheet()->getCell('M'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('N'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('O'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
+                $padronExcel->getActiveSheet()->getCell('P'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $nFila++;
             }elseif($fila instanceof Modelo\Delegado){
+                $numero;
+                if ($fila->getLicencia()!=null) {
+                    $numero=$fila->getLicencia()->getNumero();
+                }else{
+                    $numero='Sin Licencia';
+                }
                 $padronExcel->setActiveSheetIndex(0)
-                ->setCellValue('B'.$nFila, $fila->getLicencia()->getNumero())
+                ->setCellValue('B'.$nFila, $numero)
                 ->setCellValue('C'.$nFila, $fila->getDni())
                 ->setCellValue('D'.$nFila, $fila->getApellido())
                 ->setCellValue('E'.$nFila, $fila->getNombre())
                 ->setCellValue('F'.$nFila, ServidorControladores::invertirFecha($fila->getFNacimiento()))
                 ->setCellValue('G'.$nFila, $fila->getSexo())
                 ->setCellValue('H'.$nFila, $fila->getNacionalidad())
-                ->setCellValue('I'.$nFila, 'DELEGADO')
-                ->setCellValue('J'.$nFila, $fila->getDomicilio()->getDireccion())
-                ->setCellValue('K'.$nFila, $fila->getDomicilio()->getCP())
-                ->setCellValue('L'.$nFila, $fila->getDomicilio()->getLocalidad())
-                ->setCellValue('M'.$nFila, $fila->getDomicilio()->getProvincia())
-                ->setCellValue('N'.$nFila, $fila->getDomicilio()->getTelefono())
-                ->setCellValue('O'.$nFila, $fila->getLicencia()->getTipo());
+                ->setCellValue('I'.$nFila, $fila->getClub()->getNombre())
+                ->setCellValue('J'.$nFila, 'Delegado')
+                ->setCellValue('K'.$nFila, $fila->getDomicilio()->getDireccion())
+                ->setCellValue('L'.$nFila, $fila->getDomicilio()->getCP())
+                ->setCellValue('M'.$nFila, $fila->getDomicilio()->getLocalidad())
+                ->setCellValue('N'.$nFila, $fila->getDomicilio()->getProvincia())
+                ->setCellValue('O'.$nFila, $fila->getDomicilio()->getTelefono())
+                ->setCellValue('P'.$nFila, '-');
                 $padronExcel->getActiveSheet()->getCell('B'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('C'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('D'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
@@ -118,23 +136,31 @@ class ControladorReportes {
                 $padronExcel->getActiveSheet()->getCell('M'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('N'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('O'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
+                $padronExcel->getActiveSheet()->getCell('P'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $nFila++;
             }else{
+                $numero;
+                if ($fila->getLicencia()!=null) {
+                    $numero=$fila->getLicencia()->getNumero();
+                }else{
+                    $numero='Sin Licencia';
+                }
                 $padronExcel->setActiveSheetIndex(0)
-                ->setCellValue('B'.$nFila, $fila->getLicencia()->getNumero())
+                ->setCellValue('B'.$nFila, $numero)
                 ->setCellValue('C'.$nFila, $fila->getDni())
                 ->setCellValue('D'.$nFila, $fila->getApellido())
                 ->setCellValue('E'.$nFila, $fila->getNombre())
-                ->setCellValue('F'.$nFila, ServidorControladores::invertirFecha($fila->getFNacimiento()))
+                ->setCellValue('F'.$nFila, $fila->getFNacimiento())
                 ->setCellValue('G'.$nFila, $fila->getSexo())
                 ->setCellValue('H'.$nFila, $fila->getNacionalidad())
-                ->setCellValue('I'.$nFila, $fila->getCategoria())
-                ->setCellValue('J'.$nFila, $fila->getDomicilio()->getDireccion())
-                ->setCellValue('K'.$nFila, $fila->getDomicilio()->getCP())
-                ->setCellValue('L'.$nFila, $fila->getDomicilio()->getLocalidad())
-                ->setCellValue('M'.$nFila, $fila->getDomicilio()->getProvincia())
-                ->setCellValue('N'.$nFila, $fila->getDomicilio()->getTelefono())
-                ->setCellValue('O'.$nFila, $fila->getLicencia()->getTipo());
+                ->setCellValue('I'.$nFila, $fila->getClub()->getNombre())        
+                ->setCellValue('J'.$nFila, $fila->getCategoria()->getDenominacion())
+                ->setCellValue('K'.$nFila, $fila->getDomicilio()->getDireccion())
+                ->setCellValue('L'.$nFila, $fila->getDomicilio()->getCP())
+                ->setCellValue('M'.$nFila, $fila->getDomicilio()->getLocalidad())
+                ->setCellValue('N'.$nFila, $fila->getDomicilio()->getProvincia())
+                ->setCellValue('O'.$nFila, $fila->getDomicilio()->getTelefono())
+                ->setCellValue('P'.$nFila, $fila->getCategoria()->getTipoLicencia());
                 $padronExcel->getActiveSheet()->getCell('B'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('C'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('D'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
@@ -149,6 +175,7 @@ class ControladorReportes {
                 $padronExcel->getActiveSheet()->getCell('M'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('N'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $padronExcel->getActiveSheet()->getCell('O'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
+                $padronExcel->getActiveSheet()->getCell('P'.$nFila)->getStyle()->applyFromArray($this->formatoNormal());
                 $nFila++;
             }
         }

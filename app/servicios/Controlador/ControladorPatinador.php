@@ -254,6 +254,46 @@ class ControladorPatinador {
         return $r['id'];    
     }
     
+    public function pendientesExportar(){
+        $pendientes=array();
+        try{
+            if(!$r= ServidorControladores::getConBD()->getConexion()->query('SELECT * FROM persona WHERE exportada=1')){
+                die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+            while($f1=$r->fetch_array()){
+                $idP=$f1['idPersona'];
+                if(!$r2= ServidorControladores::getConBD()->getConexion()->query("SELECT * FROM patinador WHERE idPer='$idP'")){
+                    die(ServidorControladores::getConBD()->getConexion()->error);
+                }
+                while($f2=$r2->fetch_array()){
+                    $pat= $this->armarPatinador($f1, $f2);
+                    array_push($pendientes, $pat);
+                }
+            }
+        } catch (Exception $ex) {
+
+        }
+        return $pendientes;
+    }
     
+    public function activoDefinitivo(){
+        try {
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET exportada=2 WHERE exportada=1")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    public function activoPendientes($idPersona){
+        try {
+            if(!ServidorControladores::getConBD()->getConexion()->query("UPDATE persona SET exportada=1 WHERE idPersona='$idPersona'")){
+                 die(ServidorControladores::getConBD()->getConexion()->error);
+            }
+        } catch (Exception $ex) {
+
+        }
+    }
 
 }
