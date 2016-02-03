@@ -14,7 +14,7 @@ if (isset($_SESSION['user'])) {
         $datos=  json_decode($_POST['delegados']);
         foreach ($datos as $delegado) {
             $b=$cDel->insertarDelegado($delegado->apellido, $delegado->nombre, $delegado->dni,
-                    ServidorControladores::invertirFecha($delegado->fNacimiento), $delegado->sexo, $$delegado->nacionalidad, 
+                    ServidorControladores::invertirFecha($delegado->fNacimiento), $delegado->sexo, $delegado->nacionalidad, 
                     false, date(DATE_W3C), $user->getClub()->getIdClub(),
                     $delegado->domicilio->direccion, $delegado->domicilio->cp,
                     $delegado->domicilio->telefono, $delegado->domicilio->localidad, $delegado->domicilio->provincia, 
