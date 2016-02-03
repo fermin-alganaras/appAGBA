@@ -4,9 +4,11 @@ session_start();
 require_once ('..\..\..\Controlador\ServidorControladores.php');
 require_once ('..\..\..\Modelo\Usuario.php');
 
-$cDel= ServidorControladores::getConDelegado();
-$user=  unserialize($_SESSION['user']);
-if ($user) {
+
+
+if (isset($_SESSION['user'])) {
+    $cDel= ServidorControladores::getConDelegado();
+    $user=  unserialize($_SESSION['user']);
     $ids= array();
     if ($user->getTipo()=='club') {
         $datos=  json_decode($_POST['delegados']);
