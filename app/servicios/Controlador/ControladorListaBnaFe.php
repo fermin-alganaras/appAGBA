@@ -39,7 +39,7 @@ class ControladorListaBnaFe {
                 die(ServidorControladores::getConBD()->getConexion()->error);
             }
             while($l=$r->fetch_array()){
-                $lista= new Modelo\ListaBnaFe($l['fechaCreacion'], $l['idTorneo'], $l['idClub']);
+                $lista= new Modelo\ListaBnaFe($l['fechaCreacion'], $l['idTorneo'], ServidorControladores::getConClub()->traerClubXID($l['idClub'])->getNombre());
                 $nArch=$l['refArchivo'];
                 $dir="..\\..\\..\\ListasDeBuenaFe\\$nArch";
                 //$archivo=  fopen($dir, 'r');
@@ -88,12 +88,12 @@ class ControladorListaBnaFe {
             }
             while ($f= $r->fetch_array()) {
                 $lista= new Modelo\ListaBnaFe($f['fechaCreacion'], $f['idTorneo'], $f['idClub']);
-                $nArch=$f['nombreArchivo'];
-                $dir="..\ListasDeBuenaFe\'$lista->getIdTorneo()'\'$nArch'";
-                $archivo=  fopen($dir, 'r');
-                $datos= file_get_contents($archivo);
+                $lista->setIdListaBnaFe($f['idListaBnaFe']);
+                $nArch=$f['refArchivo'];
+                $dir='..\\..\\..\\ListasDeBuenaFe\\'.$nArch;
+                $datos= file_get_contents($dir);
                 $arrayDatos= json_decode($datos);
-                $this->descodificaDatos($arrayDatos, $lista);
+                $lista->setInfoLista($this->descodificaDatos($arrayDatos));
                 array_push($array_listas, $lista);
             }
         } catch (Exception $ex) {

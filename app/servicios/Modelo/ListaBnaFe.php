@@ -153,8 +153,8 @@ class ItemListaPareja {
         return $this->idPatDam;
     }
 
-    function getLibr() {
-        return $this->libr;
+    function getLibre() {
+        return $this->libre;
     }
 
     function getSolo() {
@@ -173,8 +173,8 @@ class ItemListaPareja {
         $this->idPatDam = $idPatDam;
     }
 
-   function setLibr($libr) {
-        $this->libr = $libr;
+   function setLibre($libr) {
+        $this->libre = $libr;
     }
 
     function setSolo($solo) {

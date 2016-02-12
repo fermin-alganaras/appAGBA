@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once '..\..\..\Controlador\ServidorControladores.php';
@@ -10,8 +11,8 @@ $nT=FALSE;
 
 if ($user->getTipo()== 'admin') {
     $t=  json_decode($_POST['torneo']);
-    $nT= $cTor->nuevoTorneo($t->denominacion, ServidorControladores::invertirFecha($t->inicio), 
-            ServidorControladores::invertirFecha($t->fin), $t->organiza, $t->marca, 0, $torneo->anio);
+    $nT= $cTor->actualizarTorneo($t->idTorneo, $t->denominacion, ServidorControladores::invertirFecha($t->inicio), 
+            ServidorControladores::invertirFecha($t->fin), $t->organiza, $t->marca, $t->anio);
     echo json_encode($nT);
 }else{
     echo 'No posee permiso para realizar esta operacion';

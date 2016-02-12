@@ -211,7 +211,8 @@ class ControladorPatinador {
             }
             while ($f2= $r2->fetch_array()){
                 $fecha= explode('-', $f2['fNacimiento']);
-                $edad= date('Y') - $fecha[0];
+                $edad= date('o') - $fecha[0];
+                echo $edad;
             }
         } catch (Exception $ex) {
             die($ex->getMessage());
@@ -222,6 +223,7 @@ class ControladorPatinador {
     public function getSexoPatinador($idPat){
         $s=null;
         try {
+            $s=null;
             if (!$r=  ServidorControladores::getConBD()->getConexion()->query("SELECT idPer FROM patinador "
                     . "WHERE idPatinador='$idPat'")) {
                 die(ServidorControladores::getConBD()->getConexion()->error);
@@ -234,7 +236,7 @@ class ControladorPatinador {
                 die(ServidorControladores::getConBD()->getConexion()->error);
             }
             while ($f2= $r2->fetch_array()){
-                $sexo= $f2['fNacimiento'];
+                $sexo= $f2['sexo'];
                 if ($sexo == 'F') {
                     $s='DAMAS';
                 }else{
