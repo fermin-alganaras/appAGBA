@@ -163,7 +163,7 @@ class ControladorDelegado {
     }
 
     public function traerUltimoId() {
-        $r = ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPatinador) AS id FROM patinador")->fetch_array();
+        $r = ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idDelegado) AS id FROM delegado")->fetch_array();
 
         return $r['id'];
     }

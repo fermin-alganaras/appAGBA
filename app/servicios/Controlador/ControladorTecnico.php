@@ -170,7 +170,7 @@ class ControladorTecnico {
     }
     
      public function traerUltimoId(){
-        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idPatinador) AS id FROM patinador" )->fetch_array();
+        $r=ServidorControladores::getConBD()->getConexion()->query("SELECT MAX(idTecnico) AS id FROM tecnico" )->fetch_array();
         
         return $r['id'];    
     }
